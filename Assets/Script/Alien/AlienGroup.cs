@@ -2,32 +2,71 @@ using UnityEngine;
 
 public class AlienGroup : MonoBehaviour
 {
-    [SerializeField] private float speed = 0f;
-    [SerializeField] private float leftBorder = -11f;
-    [SerializeField] private float rightBorder = 11f;
-    [SerializeField] private float dropDistance = 0.1f;
+    [SerializeField] private float moveDistance = 0.3f;
+    [SerializeField] private float moveIntervalTimer = 0.4f;
+    [SerializeField] private float leftBorder = -10f;
+    [SerializeField] private float rightBorder = 10f;
+    [SerializeField] private float dropDistance = 0.25f;
 
-    private int direction = 1;
+    [SerializeField] private int direction = 1;
+    private float timer;
+
+    private bool reachedBorder = false;
+
+    private void Start()
+    {
+        // Set the group's starting world X position to 0 for consistency
+        transform.position = new Vector3(0f, transform.position.y, transform.position.z);
+    }
 
     void Update()
     {
-        transform.Translate(direction * speed * Time.deltaTime, 0, 0);
+        timer += Time.deltaTime;
 
-        foreach (Transform alien in transform)
+
+        if (timer < moveIntervalTimer)
         {
-            if (alien.position.x >= rightBorder && direction == 1)
+            return;
+        }
+
+        timer = 0f;
+
+        // Specific case to move group down when reachedBorder, then disable reachedBorder
+
+        if (reachedBorder) 
+        {
+            // Space.World, tells Unity to use global coordinate
+            transform.Translate(0f, -dropDistance, 0f, Space.World);
+            direction *= -1;
+            reachedBorder = false;
+            return;
+        }
+
+        // Move the group when the movement timer finishes
+
+        // If any child alien would reach a border (based on world position), set reachedBorder = true, else keep moving
+
+        float nextMove = direction * moveDistance;
+
+        foreach (Transform alien in transform) 
+        {
+            float nextPosition = alien.position.x + nextMove;
+
+            if (direction == 1 && nextPosition >= rightBorder)
             {
-                direction = -1;
-                transform.Translate(0, -dropDistance, 0);
-                break;
+                nextMove = rightBorder - alien.position.x;
+                reachedBorder = true;
             }
 
-            if (alien.position.x <= leftBorder && direction == -1)
+            if (direction == -1 && nextPosition <= leftBorder)
             {
-                direction = 1;
-                transform.Translate(0, -dropDistance, 0);
-                break;
+                nextMove = leftBorder - alien.position.x;
+                reachedBorder = true;
             }
         }
+
+        // No alien reached a border, so move the group horizontally
+        transform.Translate(nextMove, 0f, 0f, Space.World);
+
     }
 }

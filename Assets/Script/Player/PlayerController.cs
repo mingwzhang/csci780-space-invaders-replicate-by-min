@@ -4,10 +4,18 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 15f;
-    [SerializeField] private GameObject playerBullet;
 
     [SerializeField] private float leftBorder = -10f;
     [SerializeField] private float rightBorder = 10f;
+
+    [SerializeField] private GameObject playerBullet;
+
+    [SerializeField] private float fireRate = 0.1f;  // Minimum number of seconds between shots
+    private float nextFireTime;
+
+    // Time.deltaTime = the time since the previous frame, making movement frame-rate independent
+    // Time.time = the total time since the game started
+
 
     void Update()
     {
@@ -19,6 +27,7 @@ public class PlayerController : MonoBehaviour
         if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed)
             move = 1;
 
+
         transform.Translate(move * speed * Time.deltaTime, 0, 0);
 
         if (transform.position.x < leftBorder)
@@ -27,7 +36,15 @@ public class PlayerController : MonoBehaviour
         if (transform.position.x > rightBorder)
             transform.position = new Vector2(rightBorder, transform.position.y);
 
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame && Time.time >= nextFireTime)
+        {
             Instantiate(playerBullet, transform.position, transform.rotation);
+
+            // Allow the next shot after fireRate seconds have passed
+            nextFireTime = Time.time + fireRate;
+             
+        }
     }
+
+
 }
