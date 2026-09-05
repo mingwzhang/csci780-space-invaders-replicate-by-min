@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Alien : MonoBehaviour
+public class TestColliderScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,16 +16,9 @@ public class Alien : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Destroy(gameObject);
+            Debug.Log("Hit Player");
         }
-        //if (collision.gameObject.CompareTag("PlayerBullet"))
-        //{
-        //    Destroy(gameObject);
-        //    Debug.Log("Hit2");
-        //}
     }
-
-
 }

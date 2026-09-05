@@ -16,7 +16,7 @@ public class AlienGroup : MonoBehaviour
     private void Start()
     {
         // Set the group's starting world X position to 0 for consistency
-        transform.position = new Vector3(0f, transform.position.y, transform.position.z);
+        // transform.position = new Vector3(0f, transform.position.y, transform.position.z);
     }
 
     void Update()
