@@ -1,28 +1,45 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AlienGroup : MonoBehaviour
 {
-    [SerializeField] private float moveDistance = 0.3f;
-    [SerializeField] private float moveIntervalTimer = 0.4f;
-    [SerializeField] private float leftBorder = -10f;
-    [SerializeField] private float rightBorder = 10f;
-    [SerializeField] private float dropDistance = 0.25f;
+    private float moveDistance = 0.2f;
+    private float moveIntervalTimer = 0.5f;
+    private float leftBorder = -11f;
+    private float rightBorder = 11f;
+    private float dropDistance = 0.25f;
 
-    [SerializeField] private int direction = 1;
+    private int direction = 1;
     private float timer;
-
     private bool reachedBorder = false;
 
-    private void Start()
+    [SerializeField] private float minShootInterval = 0.3f;
+    [SerializeField] private float maxShootInterval = 1.5f;
+
+    private float shootInterval;
+    private float shootTimer;
+
+    void Start()
     {
-        // Set the group's starting world X position to 0 for consistency
-        // transform.position = new Vector3(0f, transform.position.y, transform.position.z);
+        shootInterval = Random.Range(minShootInterval, maxShootInterval);
     }
 
     void Update()
     {
-        timer += Time.deltaTime;
+        // Shooting timer
+        shootTimer += Time.deltaTime;
 
+        if (shootTimer >= shootInterval)
+        {
+            shootTimer = 0f;
+            RandomAlienShoot();
+
+            // Pick a new delay for the next shot
+            shootInterval = Random.Range(minShootInterval, maxShootInterval);
+        }
+
+        // Movement timer
+        timer += Time.deltaTime;
 
         if (timer < moveIntervalTimer)
         {
@@ -31,42 +48,79 @@ public class AlienGroup : MonoBehaviour
 
         timer = 0f;
 
-        // Specific case to move group down when reachedBorder, then disable reachedBorder
-
-        if (reachedBorder) 
+        // Drop and reverse after reaching a border
+        if (reachedBorder)
         {
-            // Space.World, tells Unity to use global coordinate
             transform.Translate(0f, -dropDistance, 0f, Space.World);
             direction *= -1;
             reachedBorder = false;
             return;
         }
 
-        // Move the group when the movement timer finishes
-
-        // If any child alien would reach a border (based on world position), set reachedBorder = true, else keep moving
-
         float nextMove = direction * moveDistance;
 
-        foreach (Transform alien in transform) 
+        foreach (Transform row in transform)
         {
-            float nextPosition = alien.position.x + nextMove;
-
-            if (direction == 1 && nextPosition >= rightBorder)
+            foreach (Transform alien in row)
             {
-                nextMove = rightBorder - alien.position.x;
-                reachedBorder = true;
-            }
+                float nextPosition = alien.position.x + nextMove;
 
-            if (direction == -1 && nextPosition <= leftBorder)
-            {
-                nextMove = leftBorder - alien.position.x;
-                reachedBorder = true;
+                if (direction == 1 && nextPosition >= rightBorder)
+                {
+                    nextMove = rightBorder - alien.position.x;
+                    reachedBorder = true;
+                }
+
+                if (direction == -1 && nextPosition <= leftBorder)
+                {
+                    nextMove = leftBorder - alien.position.x;
+                    reachedBorder = true;
+                }
             }
         }
 
-        // No alien reached a border, so move the group horizontally
         transform.Translate(nextMove, 0f, 0f, Space.World);
+    }
 
+    private void RandomAlienShoot()
+    {
+        // Find the Alien scripts inside the group, including inside rows
+        Alien[] aliens = GetComponentsInChildren<Alien>();
+
+        List<Alien> bottomAliens = new List<Alien>();
+
+        foreach (Alien alien in aliens)
+        {
+            bool isBottom = true;
+
+            // Check whether another alien is below this one
+            foreach (Alien other in aliens)
+            {
+                bool sameColumn = Mathf.Abs(other.transform.position.x - alien.transform.position.x) < 0.1f;
+
+                bool below = other.transform.position.y < alien.transform.position.y;
+
+                if (sameColumn && below)
+                {
+                    isBottom = false;
+                    break;
+                }
+            }
+
+            if (isBottom)
+            {
+                bottomAliens.Add(alien);
+            }
+        }
+
+        // No aliens remain
+        if (bottomAliens.Count == 0)
+        {
+            return;
+        }
+
+        // Choose one bottom alien and tell it to shoot
+        int randomIndex = Random.Range(0, bottomAliens.Count);
+        bottomAliens[randomIndex].Shoot();
     }
 }

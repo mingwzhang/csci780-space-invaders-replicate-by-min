@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Alien : MonoBehaviour
 {
+    [SerializeField] private GameObject alienBullet;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -12,6 +15,11 @@ public class Alien : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Shoot()
+    {
+        Instantiate(alienBullet, transform.position, Quaternion.identity);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

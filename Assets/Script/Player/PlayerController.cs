@@ -6,8 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 15f;
 
-    [SerializeField] private float leftBorder = -10f;
-    [SerializeField] private float rightBorder = 10f;
+    [SerializeField] private float leftBorder = -11f;
+    [SerializeField] private float rightBorder = 11f;
 
     [SerializeField] private GameObject playerBullet;
 
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") || collision.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
         {
             Destroy(gameObject);
         }
