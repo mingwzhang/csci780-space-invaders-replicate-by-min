@@ -11,7 +11,6 @@ public class AlienGroup : MonoBehaviour
 
     private int direction = 1;
     private float timer;
-    private bool reachedBorder = false;
 
     [SerializeField] private float minShootInterval = 0.3f;
     [SerializeField] private float maxShootInterval = 1.5f;
@@ -48,15 +47,6 @@ public class AlienGroup : MonoBehaviour
 
         timer = 0f;
 
-        // Drop and reverse after reaching a border
-        if (reachedBorder)
-        {
-            transform.Translate(0f, -dropDistance, 0f, Space.World);
-            direction *= -1;
-            reachedBorder = false;
-            return;
-        }
-
         float nextMove = direction * moveDistance;
 
         foreach (Transform row in transform)
@@ -67,14 +57,19 @@ public class AlienGroup : MonoBehaviour
 
                 if (direction == 1 && nextPosition >= rightBorder)
                 {
-                    nextMove = rightBorder - alien.position.x;
-                    reachedBorder = true;
+                    // Move down and reverse direction
+                    transform.Translate(0f, -dropDistance, 0f, Space.World);
+                    direction = -1;
+                    // Immediate change horizontal movement for this update
+                    nextMove = -moveDistance;
                 }
 
-                if (direction == -1 && nextPosition <= leftBorder)
+                else if(direction == -1 && nextPosition <= leftBorder)
                 {
-                    nextMove = leftBorder - alien.position.x;
-                    reachedBorder = true;
+                    // Move down and reverse direction
+                    transform.Translate(0f, -dropDistance, 0f, Space.World);
+                    direction = 1;
+                    nextMove = moveDistance;
                 }
             }
         }

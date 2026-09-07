@@ -4,14 +4,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float speed = 15f;
+    private float speed = 15f;
 
-    [SerializeField] private float leftBorder = -11f;
-    [SerializeField] private float rightBorder = 11f;
+    private float leftBorder = -11f;
+    private float rightBorder = 11f;
 
     [SerializeField] private GameObject playerBullet;
 
-    [SerializeField] private float fireRate = 0.1f;  // Minimum number of seconds between shots
+    private float fireRate = 0.1f;  // Minimum number of seconds between shots
     private float nextFireTime;
 
     // Time.deltaTime = the time since the previous frame, making movement frame-rate independent
@@ -49,8 +49,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") || collision.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") ||
+            collision.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
         {
+            Destroy(collision.gameObject);
+
+            FindFirstObjectByType<GameManager>().LoseHealth(transform.position);
+
             Destroy(gameObject);
         }
     }
