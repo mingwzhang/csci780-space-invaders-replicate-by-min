@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AlienBullet : MonoBehaviour
 {
-    private float speed = 20f;
+    private float speed = 10f;
 
     private float bottomDistnaceLimit = -15f;
     void Update()

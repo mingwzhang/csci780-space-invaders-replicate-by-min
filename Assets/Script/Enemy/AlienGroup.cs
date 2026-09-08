@@ -12,8 +12,8 @@ public class AlienGroup : MonoBehaviour
     private int direction = 1;
     private float timer;
 
-    [SerializeField] private float minShootInterval = 0.3f;
-    [SerializeField] private float maxShootInterval = 1.5f;
+    private float minShootInterval = 0.3f;
+    private float maxShootInterval = 1.5f;
 
     private float shootInterval;
     private float shootTimer;
