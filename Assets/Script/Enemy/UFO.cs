@@ -4,7 +4,7 @@ public class UFO : MonoBehaviour
 {
 
     [SerializeField] private GameObject ufoBullet;
-    private float speed = 5f;
+    private float speed = 3f;
 
     private float rightDistnaceLimit = 13f;
 

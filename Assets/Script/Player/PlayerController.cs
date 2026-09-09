@@ -4,10 +4,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private float speed = 10f;
+    private float speed = 5f;
 
-    private float leftBorder = -11f;
-    private float rightBorder = 11f;
+    private float leftBorder = -10f;
+    private float rightBorder = 10f;
 
     [SerializeField] private GameObject playerBullet;
 

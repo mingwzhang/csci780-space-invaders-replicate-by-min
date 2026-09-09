@@ -5,8 +5,8 @@ public class AlienGroup : MonoBehaviour
 {
     private float moveDistance = 0.2f;
     private float moveIntervalTimer = 0.5f;
-    private float leftBorder = -11f;
-    private float rightBorder = 11f;
+    private float leftBorder = -10f;
+    private float rightBorder = 10f;
     private float dropDistance = 0.25f;
 
     private int direction = 1;

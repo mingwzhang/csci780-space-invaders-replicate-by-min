@@ -4,7 +4,7 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
-    private int playerHealth = 5;
+    private int playerHealth = 3;
     private float deathPauseDuration = 1.5f;
 
     [SerializeField] private TMP_Text playerHealthText;
