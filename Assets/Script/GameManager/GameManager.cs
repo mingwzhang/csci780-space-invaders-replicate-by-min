@@ -8,14 +8,14 @@ public class GameManager : MonoBehaviour
     private float deathPauseDuration = 1.5f;
 
     [SerializeField] private TMP_Text playerHealthText;
-    [SerializeField] private TMP_Text gameOverText;
+    [SerializeField] private GameObject gameOverText;
 
     [SerializeField] private GameObject playerPrefab;
 
     void Start()
     {
         playerHealthText.text = playerHealth.ToString();
-        gameOverText.enabled = false;
+        gameOverText.SetActive(false);
     }
 
     public void LoseHealth(Vector3 respawnPosition)
@@ -29,10 +29,10 @@ public class GameManager : MonoBehaviour
 
         playerHealthText.text = playerHealth.ToString();
 
-        if (playerHealth == 0)
+        if (playerHealth <= 0)
         {
             Debug.Log("Game Over");
-            gameOverText.enabled = true;
+            gameOverText.SetActive(true);
             return;
         }
 

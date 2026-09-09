@@ -702,7 +702,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 14.45645, y: 32.575348}
+  m_AnchoredPosition: {x: 14.45645, y: 34.396202}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &148342007
@@ -1399,7 +1399,7 @@ Transform:
   m_GameObject: {fileID: 385476064}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.70710665, w: 0.70710695}
-  m_LocalPosition: {x: -24.75, y: -21.942999, z: 0}
+  m_LocalPosition: {x: -24.75, y: -23.442999, z: 0}
   m_LocalScale: {x: 0.2, y: 21.47689, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1967,7 +1967,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 11
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2242,6 +2242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 629467271}
+  - component: {fileID: 629467272}
   m_Layer: 0
   m_Name: UFOSpawner
   m_TagString: Untagged
@@ -2258,12 +2259,25 @@ Transform:
   m_GameObject: {fileID: 629467270}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.1, y: 13.79, z: 0}
+  m_LocalPosition: {x: -10, y: 14.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &629467272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629467270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42b878ea816efc4bab69f6d2d0fc2d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UFOSpawner
+  ufoPrefab: {fileID: 9002186656295485135, guid: f5572ec4321b5e74dbc417578b6b05cc, type: 3}
 --- !u!1 &670695272
 GameObject:
   m_ObjectHideFlags: 0
@@ -2299,7 +2313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.8000641, y: 32.575348}
+  m_AnchoredPosition: {x: 0.8000641, y: 34.396202}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &670695274
@@ -3713,7 +3727,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.79999924, y: -0.20000076}
+  m_AnchoredPosition: {x: 0.79999924, y: -2.3708534}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1379226102
@@ -4589,7 +4603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   playerHealthText: {fileID: 1379226102}
-  gameOverText: {fileID: 833830957}
+  gameOverText: {fileID: 833830955}
   playerPrefab: {fileID: 3992407054862650075, guid: 004a7e092658bd74cb9852acc3f3c7b6, type: 3}
 --- !u!4 &1792743072
 Transform:
@@ -5228,7 +5242,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 20.829422, y: -0.20000076}
+  m_AnchoredPosition: {x: 20.829422, y: -2.3708515}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2030456921
@@ -5589,11 +5603,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2172705284928552888, guid: f5572ec4321b5e74dbc417578b6b05cc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.77
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 2172705284928552888, guid: f5572ec4321b5e74dbc417578b6b05cc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.629999
+      value: 14.29
       objectReference: {fileID: 0}
     - target: {fileID: 2172705284928552888, guid: f5572ec4321b5e74dbc417578b6b05cc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5643,6 +5657,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 9002186656295485135, guid: f5572ec4321b5e74dbc417578b6b05cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5686,7 +5704,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7549284463621507526, guid: 004a7e092658bd74cb9852acc3f3c7b6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.36
+      value: -0.13999999
       objectReference: {fileID: 0}
     - target: {fileID: 7549284463621507526, guid: 004a7e092658bd74cb9852acc3f3c7b6, type: 3}
       propertyPath: m_LocalPosition.z

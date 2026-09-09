@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject playerBullet;
 
-    private float fireRate = 0.1f;  // Minimum number of seconds between shots
+    private float fireRate = 0.4f;  // Minimum number of seconds between shots
     private float nextFireTime;
 
     // Time.deltaTime = the time since the previous frame, making movement frame-rate independent
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
         if (transform.position.x > rightBorder)
             transform.position = new Vector2(rightBorder, transform.position.y);
 
-        if (Keyboard.current.spaceKey.wasPressedThisFrame && Time.time >= nextFireTime)
+        if (Keyboard.current.spaceKey.isPressed && Time.time >= nextFireTime)
         {
             Instantiate(playerBullet, transform.position, transform.rotation);
 

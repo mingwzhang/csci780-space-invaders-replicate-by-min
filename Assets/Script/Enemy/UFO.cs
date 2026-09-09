@@ -6,7 +6,7 @@ public class UFO : MonoBehaviour
     [SerializeField] private GameObject ufoBullet;
     private float speed = 3f;
 
-    private float rightDistnaceLimit = 13f;
+    private float rightDistnaceLimit = 10f;
 
     private float minShootInterval = 0.3f;
     private float maxShootInterval = 1.5f;

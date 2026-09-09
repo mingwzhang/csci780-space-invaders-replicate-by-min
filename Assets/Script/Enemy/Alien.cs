@@ -26,13 +26,15 @@ public class Alien : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
         {
+            AlienGroup group = GetComponentInParent<AlienGroup>();
+
+            if (group != null)
+            {
+                group.AlienDestroyed(); // For each alien destroyed, speed up the group
+            }
+
             Destroy(gameObject);
         }
-        //if (collision.gameObject.CompareTag("PlayerBullet"))
-        //{
-        //    Destroy(gameObject);
-        //    Debug.Log("Hit2");
-        //}
     }
 
 

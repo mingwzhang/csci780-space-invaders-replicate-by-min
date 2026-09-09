@@ -18,6 +18,8 @@ public class AlienGroup : MonoBehaviour
     private float shootInterval;
     private float shootTimer;
 
+    private float timeDeductionPerKill = 0.0095f;
+    private float minimumInterval = 0.01f;
     void Start()
     {
         shootInterval = Random.Range(minShootInterval, maxShootInterval);
@@ -36,6 +38,8 @@ public class AlienGroup : MonoBehaviour
             // Pick a new delay for the next shot
             shootInterval = Random.Range(minShootInterval, maxShootInterval);
         }
+
+
 
         // Movement timer
         timer += Time.deltaTime;
@@ -118,4 +122,20 @@ public class AlienGroup : MonoBehaviour
         int randomIndex = Random.Range(0, bottomAliens.Count);
         bottomAliens[randomIndex].Shoot();
     }
+
+    public void AlienDestroyed()
+    {
+        // Deduct time from the interval to make them step faster
+        moveIntervalTimer -= timeDeductionPerKill;
+
+        // Ensure it doesn't drop past the absolute maximum speed threshold
+        if (moveIntervalTimer < minimumInterval)
+        {
+            moveIntervalTimer = minimumInterval;
+        }
+       // Debug.Log(moveIntervalTimer);
+
+    }
 }
+
+
