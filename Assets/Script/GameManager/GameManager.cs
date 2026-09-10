@@ -4,12 +4,11 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
-    private int playerHealth = 3;
+    private int playerHealth = 5;
     private float deathPauseDuration = 1.5f;
 
     [SerializeField] private TMP_Text playerHealthText;
     [SerializeField] private GameObject gameOverText;
-
     [SerializeField] private GameObject playerPrefab;
 
     void Start()
@@ -48,5 +47,26 @@ public class GameManager : MonoBehaviour
         Instantiate(playerPrefab, respawnPosition, Quaternion.identity);
 
         Time.timeScale = deathPauseDuration; // RESUME GAME
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("Game Over");
+
+        StopAllCoroutines();
+
+
+        playerHealth = 0;
+        playerHealthText.text = playerHealth.ToString();
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player != null)
+        {
+            Destroy(player);
+        }
+
+        gameOverText.SetActive(true);
+        Time.timeScale = 0f;
     }
 }

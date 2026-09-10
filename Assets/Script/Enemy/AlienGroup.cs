@@ -5,6 +5,9 @@ public class AlienGroup : MonoBehaviour
 {
     private float moveDistance = 0.2f;
     private float moveIntervalTimer = 0.5f;
+    private float timeDeductionPerKill = 0.0095f;
+    private float minimumInterval = 0.01f;
+
     private float leftBorder = -10f;
     private float rightBorder = 10f;
     private float dropDistance = 0.25f;
@@ -18,8 +21,10 @@ public class AlienGroup : MonoBehaviour
     private float shootInterval;
     private float shootTimer;
 
-    private float timeDeductionPerKill = 0.0095f;
-    private float minimumInterval = 0.01f;
+
+    [SerializeField] private GameManager gameManager;
+    private float gameOverY = 0.5f;
+
     void Start()
     {
         shootInterval = Random.Range(minShootInterval, maxShootInterval);
@@ -27,6 +32,8 @@ public class AlienGroup : MonoBehaviour
 
     void Update()
     {
+        CheckGameOver();
+
         // Shooting timer
         shootTimer += Time.deltaTime;
 
@@ -135,6 +142,21 @@ public class AlienGroup : MonoBehaviour
         }
        // Debug.Log(moveIntervalTimer);
 
+    }
+
+    private void CheckGameOver()
+    {
+        foreach (Transform row in transform)
+        {
+            foreach (Transform alien in row)
+            {
+                if (alien.position.y <= gameOverY)
+                {
+                    gameManager.GameOver();
+                    return;
+                }
+            }
+        }
     }
 }
 
