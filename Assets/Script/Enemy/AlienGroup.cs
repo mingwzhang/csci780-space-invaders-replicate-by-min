@@ -23,7 +23,7 @@ public class AlienGroup : MonoBehaviour
 
 
     [SerializeField] private GameManager gameManager;
-    private float gameOverY = 0.5f;
+    private float gameOverY = 2.0f;
 
     void Start()
     {
@@ -90,22 +90,27 @@ public class AlienGroup : MonoBehaviour
 
     private void RandomAlienShoot()
     {
-        // Find the Alien scripts inside the group, including inside rows
+        // This array is rebuilt every time this method runs, searches this GameObject and all of its children for Alien components
         Alien[] aliens = GetComponentsInChildren<Alien>();
 
+        // Temporary list rebuilt from scratch every time this method runs
         List<Alien> bottomAliens = new List<Alien>();
 
+        // Check each alien to see if another alien is below it
         foreach (Alien alien in aliens)
         {
             bool isBottom = true;
 
-            // Check whether another alien is below this one
+            // Compare this alien with every other alien
             foreach (Alien other in aliens)
             {
+                // Check if both aliens are roughly in the same column
                 bool sameColumn = Mathf.Abs(other.transform.position.x - alien.transform.position.x) < 0.1f;
 
+                // Check if the other alien is below this alien
                 bool below = other.transform.position.y < alien.transform.position.y;
 
+                // If another alien is below it in the same column, this alien is not the bottom alien
                 if (sameColumn && below)
                 {
                     isBottom = false;
@@ -140,7 +145,7 @@ public class AlienGroup : MonoBehaviour
         {
             moveIntervalTimer = minimumInterval;
         }
-       // Debug.Log(moveIntervalTimer);
+        // Debug.Log(moveIntervalTimer);
 
     }
 

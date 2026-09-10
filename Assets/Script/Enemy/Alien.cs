@@ -3,12 +3,13 @@ using UnityEngine;
 public class Alien : MonoBehaviour
 {
     [SerializeField] private GameObject alienBullet;
+    [SerializeField] private int scoreValue;
 
+    private GameManager gameManager;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        gameManager = FindFirstObjectByType<GameManager>();
     }
 
     // Update is called once per frame
@@ -32,7 +33,7 @@ public class Alien : MonoBehaviour
             {
                 group.AlienDestroyed(); // For each alien destroyed, speed up the group
             }
-
+            gameManager.AddScore(scoreValue);
             Destroy(gameObject);
         }
     }

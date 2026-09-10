@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Alien
   alienBullet: {fileID: 1476688834169470998, guid: 5eb8b2160367e624c861a06bfeedd5f9, type: 3}
+  scoreValue: 10
 --- !u!50 &4871765555090145264
 Rigidbody2D:
   serializedVersion: 5

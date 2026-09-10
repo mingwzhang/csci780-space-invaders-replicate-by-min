@@ -1,6 +1,7 @@
-using UnityEngine;
-using TMPro;
 using System.Collections;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,10 +12,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverText;
     [SerializeField] private GameObject playerPrefab;
 
+    private int score = 0;
+    private int highScore = 0;
+
+    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private TMP_Text highScoreText;
+
     void Start()
     {
         playerHealthText.text = playerHealth.ToString();
         gameOverText.SetActive(false);
+
+        highScore = PlayerPrefs.GetInt("HighScore", 0);
+
+        scoreText.text = score.ToString("D4");
+        highScoreText.text = highScore.ToString("D4");
+
     }
 
     public void LoseHealth(Vector3 respawnPosition)
@@ -42,11 +55,11 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f; // PAUSE GAME
 
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(deathPauseDuration);
 
         Instantiate(playerPrefab, respawnPosition, Quaternion.identity);
 
-        Time.timeScale = deathPauseDuration; // RESUME GAME
+        Time.timeScale = 1; // RESUME GAME
     }
 
     public void GameOver()
@@ -68,5 +81,21 @@ public class GameManager : MonoBehaviour
 
         gameOverText.SetActive(true);
         Time.timeScale = 0f;
+    }
+
+    public void AddScore(int amount)
+    {
+        score += amount;
+
+        scoreText.text = score.ToString("D4");
+
+        if (score > highScore)
+        {
+            highScore = score;
+            highScoreText.text = highScore.ToString("D4");
+
+            PlayerPrefs.SetInt("HighScore", highScore);
+            PlayerPrefs.Save();
+        }
     }
 }

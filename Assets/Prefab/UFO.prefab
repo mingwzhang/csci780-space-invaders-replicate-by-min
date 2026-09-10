@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4905988188428709320}
   - component: {fileID: 5712768850661132354}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 2933671289333322183}
   - component: {fileID: 1090974517277358271}
   - component: {fileID: 816283634583565743}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: UFO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
