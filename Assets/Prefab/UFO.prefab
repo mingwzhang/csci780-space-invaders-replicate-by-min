@@ -244,3 +244,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UFO
   ufoBullet: {fileID: 1476688834169470998, guid: 5eb8b2160367e624c861a06bfeedd5f9, type: 3}
+  scoreArray: 320000006400000096000000c80000002c010000
+  scoreValue: 0

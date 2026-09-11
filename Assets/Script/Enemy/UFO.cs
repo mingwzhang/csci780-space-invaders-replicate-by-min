@@ -14,6 +14,17 @@ public class UFO : MonoBehaviour
     private float shootInterval;
     private float shootTimer;
 
+    private GameManager gameManager;
+    [SerializeField] private int[] scoreArray = {50, 100, 150, 200, 300};
+    [SerializeField] private int scoreValue = 0;
+
+
+    private void Start()
+    {
+        gameManager = FindFirstObjectByType<GameManager>();
+        scoreValue = scoreArray[Random.Range(0,5)];
+        print(scoreValue);
+    }
 
     void Update()
     {
@@ -39,6 +50,7 @@ public class UFO : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
         {
+            gameManager.AddScore(scoreValue);
             Destroy(gameObject);
         }
     }

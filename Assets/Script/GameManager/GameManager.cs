@@ -8,15 +8,22 @@ public class GameManager : MonoBehaviour
     private int playerHealth = 5;
     private float deathPauseDuration = 1.5f;
 
+    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject playerUIPrefab;
+    [SerializeField] private GameObject healthUISpawnPoint;
+    private float healthUIPosGap = 2.5f;
+
+
     [SerializeField] private TMP_Text playerHealthText;
     [SerializeField] private GameObject gameOverText;
-    [SerializeField] private GameObject playerPrefab;
-
-    private int score = 0;
-    private int highScore = 0;
 
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text highScoreText;
+    
+    private int score = 0;
+    private int highScore = 0;
+
+
 
     void Start()
     {
@@ -28,6 +35,35 @@ public class GameManager : MonoBehaviour
         scoreText.text = score.ToString("D4");
         highScoreText.text = highScore.ToString("D4");
 
+        SpawnHealthUI();
+
+    }
+
+    public void SpawnHealthUI()
+    {
+        for (int i = 0; i < playerHealth; i++)
+        {
+            // Spawn health UI, position based on spawn point
+            GameObject newHealthUI = Instantiate(playerUIPrefab, healthUISpawnPoint.transform);
+            newHealthUI.transform.localPosition = new Vector3(i * healthUIPosGap, 0, 0);
+            //Debug.Log(i * healthUIPosGap);
+        }
+    }
+
+    public void RemoveHealthUI()
+    {
+        if (healthUISpawnPoint.transform.childCount > 0)
+        {
+            Destroy(healthUISpawnPoint.transform.GetChild(healthUISpawnPoint.transform.childCount - 1).gameObject);
+        }
+    }
+
+    public void RemoveAllHealthUI()
+    {
+        foreach (Transform child in healthUISpawnPoint.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     public void LoseHealth(Vector3 respawnPosition)
@@ -38,12 +74,12 @@ public class GameManager : MonoBehaviour
         }
 
         playerHealth--;
-
         playerHealthText.text = playerHealth.ToString();
+        RemoveHealthUI();
 
         if (playerHealth <= 0)
         {
-            Debug.Log("Game Over");
+            //Debug.Log("Game Over");
             gameOverText.SetActive(true);
             return;
         }
@@ -77,6 +113,7 @@ public class GameManager : MonoBehaviour
         if (player != null)
         {
             Destroy(player);
+            RemoveAllHealthUI();
         }
 
         gameOverText.SetActive(true);
@@ -98,4 +135,5 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.Save();
         }
     }
+
 }

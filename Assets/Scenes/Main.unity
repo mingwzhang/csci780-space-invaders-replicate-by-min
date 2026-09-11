@@ -4005,6 +4005,41 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8142105136463506745, guid: bb687880d4bc6454194508092c0d4013, type: 3}
   m_PrefabInstance: {fileID: 1073756010}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1174276749
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1174276750}
+  m_Layer: 5
+  m_Name: HealthUISpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1174276750
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174276749}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1379226101}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 2.7312796, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1194473350
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4220,14 +4255,15 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1174276750}
   m_Father: {fileID: 905507657}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.79999924, y: -2.3708534}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -17.218948, y: -18.3863}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1379226102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4314,7 +4350,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -2.8596606, z: -1.4197948, w: 0.3317345}
+  m_margin: {x: -0.8163541, y: -0.6010642, z: -1.0255761, w: -0.9852575}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5100,9 +5136,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d61770ca7575a45a5966fbc1d11aa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  playerPrefab: {fileID: 3992407054862650075, guid: 004a7e092658bd74cb9852acc3f3c7b6, type: 3}
+  playerUIPrefab: {fileID: 7305275349468492377, guid: 6b8d20be4cdc12f40bd2aefb58be7cd0, type: 3}
+  healthUISpawnPoint: {fileID: 1174276749}
   playerHealthText: {fileID: 1379226102}
   gameOverText: {fileID: 833830955}
-  playerPrefab: {fileID: 3992407054862650075, guid: 004a7e092658bd74cb9852acc3f3c7b6, type: 3}
   scoreText: {fileID: 250591720}
   highScoreText: {fileID: 106714475}
 --- !u!4 &1792743072
@@ -6321,9 +6359,9 @@ SceneRoots:
   - {fileID: 1945223188}
   - {fileID: 8753810548826857855}
   - {fileID: 565613286}
-  - {fileID: 116927975}
   - {fileID: 1801071711}
   - {fileID: 905507657}
   - {fileID: 5649023538166790484}
   - {fileID: 629467271}
   - {fileID: 891446486}
+  - {fileID: 116927975}
