@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     private int score = 0;
     private int highScore = 0;
 
-
+    private bool isGameOver = false;
 
     void Start()
     {
@@ -66,9 +66,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void LoseHealth(Vector3 respawnPosition)
+    public void LoseHealth(PlayerController player, Vector3 respawnPosition)
     {
-        if (playerHealth <= 0)
+        if (isGameOver || playerHealth <= 0)
         {
             return;
         }
@@ -79,45 +79,57 @@ public class GameManager : MonoBehaviour
 
         if (playerHealth <= 0)
         {
-            //Debug.Log("Game Over");
-            gameOverText.SetActive(true);
+            BeginGameOver(player);
             return;
         }
 
-        StartCoroutine(RespawnPlayer(respawnPosition));
-    }
-
-    private IEnumerator RespawnPlayer(Vector3 respawnPosition)
-    {
-        Time.timeScale = 0f; // PAUSE GAME
-
-        yield return new WaitForSecondsRealtime(deathPauseDuration);
-
-        Instantiate(playerPrefab, respawnPosition, Quaternion.identity);
-
-        Time.timeScale = 1; // RESUME GAME
+        StartCoroutine(RespawnPlayer(player, respawnPosition));
     }
 
     public void GameOver()
     {
-        Debug.Log("Game Over");
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+        BeginGameOver(player);
+    }
 
+    private IEnumerator RespawnPlayer(PlayerController player, Vector3 respawnPosition)
+    {
+        Time.timeScale = 0f;
+
+        yield return player.DestroyPlayer();
+
+        // Extra pause after the destruction animation finishes.
+        yield return new WaitForSecondsRealtime(1.5f);
+
+        Instantiate(playerPrefab, respawnPosition, Quaternion.identity);
+
+        Time.timeScale = 1f;
+    }
+
+    private void BeginGameOver(PlayerController player)
+    {
+        if (isGameOver) return;
+
+        isGameOver = true;
         StopAllCoroutines();
-
 
         playerHealth = 0;
         playerHealthText.text = playerHealth.ToString();
+        RemoveAllHealthUI();
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Time.timeScale = 0f;
 
+        StartCoroutine(GameOverSequence(player));
+    }
+
+    private IEnumerator GameOverSequence(PlayerController player)
+    {
         if (player != null)
         {
-            Destroy(player);
-            RemoveAllHealthUI();
+            yield return player.DestroyPlayer();
         }
 
         gameOverText.SetActive(true);
-        Time.timeScale = 0f;
     }
 
     public void AddScore(int amount)
@@ -135,5 +147,6 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.Save();
         }
     }
+
 
 }

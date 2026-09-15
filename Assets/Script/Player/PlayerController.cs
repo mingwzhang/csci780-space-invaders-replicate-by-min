@@ -1,11 +1,11 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
     private float speed = 5f;
-
     private float leftBorder = -10f;
     private float rightBorder = 10f;
 
@@ -13,9 +13,17 @@ public class PlayerController : MonoBehaviour
 
     private float fireRate = 0.4f;  // Minimum number of seconds between shots
     private float nextFireTime;
+    private bool isDying = false;
+
 
     // Time.deltaTime = the time since the previous frame, making movement frame-rate independent
     // Time.time = the total time since the game started
+
+    // Assign the Animator from the player's child.
+    [SerializeField] private Animator playerAnimator;
+
+    // Assign the player_destroyed animation clip.
+    [SerializeField] private AnimationClip playerDestroyedAnimation;
 
 
     void Update()
@@ -49,14 +57,35 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isDying) return;
+
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") ||
             collision.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
         {
+            isDying = true;
+
+            Vector3 respawnPosition = transform.position;
+
+            // Destroy the enemy or enemy bullet only.
             Destroy(collision.gameObject);
 
-            FindFirstObjectByType<GameManager>().LoseHealth(transform.position);
+            FindFirstObjectByType<GameManager>().LoseHealth(this, respawnPosition);
 
-            Destroy(gameObject);
+            // Do not destroy the player here.
         }
+    }
+
+    public IEnumerator DestroyPlayer()
+    {
+        isDying = true;
+
+        playerAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
+        playerAnimator.Play("Base Layer.player_destroyed", 0, 0f);
+
+        yield return new WaitForSecondsRealtime(
+            playerDestroyedAnimation.length);
+
+        // This is now the only place that destroys the player.
+        Destroy(gameObject);
     }
 }
