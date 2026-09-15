@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Alien : MonoBehaviour
 {
@@ -7,9 +8,26 @@ public class Alien : MonoBehaviour
 
     private GameManager gameManager;
 
+    private Animator childAnimator;
+    private Collider2D alienCollider;
+
+    void Awake()
+    {
+        if (childAnimator == null) childAnimator = GetComponentInChildren<Animator>();
+        alienCollider = GetComponent<Collider2D> ();
+    }
+
+
     void Start()
     {
         gameManager = FindFirstObjectByType<GameManager>();
+
+        childAnimator = GetComponentInChildren<Animator>();
+
+        if (childAnimator == null)   
+            Debug.LogError("No Animator found on any child GameObject!", this);
+
+
     }
 
     // Update is called once per frame
@@ -34,9 +52,25 @@ public class Alien : MonoBehaviour
                 group.AlienDestroyed(); // For each alien destroyed, speed up the group
             }
             gameManager.AddScore(scoreValue);
-            Destroy(gameObject);
+            StartCoroutine(DestroyAlien());
         }
     }
 
 
+    private IEnumerator DestroyAlien()
+    {
+        // Force the animator to run even if the game is paused (Time.timeScale = 0)
+        childAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
+        childAnimator.Play("alien_destroyed");
+        alienCollider.enabled = false;
+
+        yield return null;
+
+        // Read the exact length of the animation currently playing on the child
+        float clipLength = childAnimator.GetCurrentAnimatorStateInfo(0).length;
+
+        yield return new WaitForSecondsRealtime(clipLength);
+        Destroy(gameObject);
+
+    }
 }

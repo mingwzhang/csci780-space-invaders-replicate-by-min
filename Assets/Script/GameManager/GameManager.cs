@@ -6,7 +6,7 @@ using UnityEngine.SocialPlatforms.Impl;
 public class GameManager : MonoBehaviour
 {
     private int playerHealth = 5;
-    private float deathPauseDuration = 1.5f;
+    //private float deathPauseDuration = 1.5f;
 
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject playerUIPrefab;

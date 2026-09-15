@@ -20,11 +20,18 @@ public class PlayerController : MonoBehaviour
     // Time.time = the total time since the game started
 
     // Assign the Animator from the player's child.
-    [SerializeField] private Animator playerAnimator;
+    private Animator childAnimator;
 
-    // Assign the player_destroyed animation clip.
-    [SerializeField] private AnimationClip playerDestroyedAnimation;
 
+    void Awake()
+    {
+        if (childAnimator == null) childAnimator = GetComponentInChildren<Animator>();
+    }
+
+    private void Start()
+    {
+        
+    }
 
     void Update()
     {
@@ -51,7 +58,6 @@ public class PlayerController : MonoBehaviour
 
             // Allow the next shot after fireRate seconds have passed
             nextFireTime = Time.time + fireRate;
-             
         }
     }
 
@@ -59,8 +65,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isDying) return;
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") ||
-            collision.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") || collision.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
         {
             isDying = true;
 
@@ -70,8 +75,6 @@ public class PlayerController : MonoBehaviour
             Destroy(collision.gameObject);
 
             FindFirstObjectByType<GameManager>().LoseHealth(this, respawnPosition);
-
-            // Do not destroy the player here.
         }
     }
 
@@ -79,13 +82,17 @@ public class PlayerController : MonoBehaviour
     {
         isDying = true;
 
-        playerAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
-        playerAnimator.Play("Base Layer.player_destroyed", 0, 0f);
+        // Force the animator to run even if the game is paused (Time.timeScale = 0)
+        childAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
+        childAnimator.Play("player_destroyed");
 
-        yield return new WaitForSecondsRealtime(
-            playerDestroyedAnimation.length);
+        yield return null;
 
-        // This is now the only place that destroys the player.
+        // Read the exact length of the animation currently playing on the child
+        float clipLength = childAnimator.GetCurrentAnimatorStateInfo(0).length;
+
+        yield return new WaitForSecondsRealtime(clipLength);
+
         Destroy(gameObject);
     }
 }
