@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 4871765555090145264}
   - component: {fileID: 2297661360394455743}
   m_Layer: 8
-  m_Name: Alien
+  m_Name: Alien1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e6ef20aae97e34ca59b90201538ef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Alien
-  alienBullet: {fileID: 1476688834169470998, guid: 5eb8b2160367e624c861a06bfeedd5f9, type: 3}
+  alienBullet: {fileID: 1476688834169470998, guid: 3f2e8c9215a5ccc449a54ef388c84d47, type: 3}
   scoreValue: 30
 --- !u!50 &4871765555090145264
 Rigidbody2D:

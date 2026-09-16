@@ -36,9 +36,12 @@ public class Alien : MonoBehaviour
         
     }
 
-    public void Shoot()
+    public void Shoot(int animationIndex)
     {
-        Instantiate(alienBullet, transform.position, Quaternion.identity);
+        GameObject newBullet = Instantiate(alienBullet, transform.position, Quaternion.identity);
+
+        AlienBullet bulletScript = newBullet.GetComponent<AlienBullet>();
+        bulletScript.SetAnimation(animationIndex);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -59,8 +62,6 @@ public class Alien : MonoBehaviour
 
     private IEnumerator DestroyAlien()
     {
-        // Force the animator to run even if the game is paused (Time.timeScale = 0)
-        childAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
         childAnimator.Play("alien_destroyed");
         alienCollider.enabled = false;
 

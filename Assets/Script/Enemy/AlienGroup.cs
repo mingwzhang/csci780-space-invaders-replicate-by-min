@@ -25,6 +25,8 @@ public class AlienGroup : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     private float gameOverY = 2.0f;
 
+    private int bulletAnimationNumber = 1;
+
     void Start()
     {
         shootInterval = Random.Range(minShootInterval, maxShootInterval);
@@ -130,9 +132,19 @@ public class AlienGroup : MonoBehaviour
             return;
         }
 
-        // Choose one bottom alien and tell it to shoot
+        // Choose one bottom alien
         int randomIndex = Random.Range(0, bottomAliens.Count);
-        bottomAliens[randomIndex].Shoot();
+
+        // Fire using the current animation
+        bottomAliens[randomIndex].Shoot(bulletAnimationNumber);
+
+        // Move to the next animation: 1 -> 2 -> 3 -> 1
+        bulletAnimationNumber++;
+
+        if (bulletAnimationNumber > 3)
+        {
+            bulletAnimationNumber = 1;
+        }
     }
 
     public void AlienDestroyed()

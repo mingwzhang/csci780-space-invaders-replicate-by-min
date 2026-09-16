@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: alien3
+  m_Name: alien2_default
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,11 +21,11 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 7352566537454083339, guid: ce03f4152f7399b4499af42724c21c62, type: 3}
+      value: {fileID: -7171957300716027894, guid: ce03f4152f7399b4499af42724c21c62, type: 3}
     - time: 0.5
-      value: {fileID: -2645137068705150786, guid: ce03f4152f7399b4499af42724c21c62, type: 3}
+      value: {fileID: 4999688962997390580, guid: ce03f4152f7399b4499af42724c21c62, type: 3}
     - time: 1
-      value: {fileID: -2645137068705150786, guid: ce03f4152f7399b4499af42724c21c62, type: 3}
+      value: {fileID: 4999688962997390580, guid: ce03f4152f7399b4499af42724c21c62, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,9 +48,9 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 7352566537454083339, guid: ce03f4152f7399b4499af42724c21c62, type: 3}
-    - {fileID: -2645137068705150786, guid: ce03f4152f7399b4499af42724c21c62, type: 3}
-    - {fileID: -2645137068705150786, guid: ce03f4152f7399b4499af42724c21c62, type: 3}
+    - {fileID: -7171957300716027894, guid: ce03f4152f7399b4499af42724c21c62, type: 3}
+    - {fileID: 4999688962997390580, guid: ce03f4152f7399b4499af42724c21c62, type: 3}
+    - {fileID: 4999688962997390580, guid: ce03f4152f7399b4499af42724c21c62, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
