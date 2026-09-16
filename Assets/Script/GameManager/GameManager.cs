@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
         if (isGameOver) return;
 
         isGameOver = true;
-        StopAllCoroutines();
+        StopAllCoroutines();  
 
         playerHealth = 0;
         playerHealthText.text = playerHealth.ToString();
