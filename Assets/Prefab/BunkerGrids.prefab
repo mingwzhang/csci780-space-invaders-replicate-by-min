@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2573778895392272198}
   - component: {fileID: 7225070106881526474}
   - component: {fileID: 7844656134289745959}
-  m_Layer: 0
+  - component: {fileID: 633173517187545254}
+  m_Layer: 10
   m_Name: BunkerGrids
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,3 +139,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.0625, y: 0.0625}
   m_EdgeRadius: 0
+--- !u!114 &633173517187545254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5641916355228632775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 013b72b63d7ef244194b09b31e5ef9dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bunker
+  damageRadius: 0.5

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7899926731958636514}
   - component: {fileID: 8146344094832132270}
   - component: {fileID: 1003503488453654513}
-  - component: {fileID: 2442868519357161659}
   - component: {fileID: 7459252340109708961}
   m_Layer: 0
   m_Name: Bunker
@@ -142,19 +141,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.7546294, y: 1.1260533}
   m_EdgeRadius: 0
---- !u!114 &2442868519357161659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 314044448190323153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 013b72b63d7ef244194b09b31e5ef9dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Bunker
-  spriteRenderer: {fileID: 6836501101578282298}
 --- !u!50 &7459252340109708961
 Rigidbody2D:
   serializedVersion: 5
@@ -225,7 +211,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe23356c27188514ea664dc6d8f4f79b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::BunkerGenerator
   blockPrefab: {fileID: 5641916355228632775, guid: 40bdca104ad1b734fad9f19729bc4936, type: 3}
   blockSize: 0.1
   overlap: 1.02

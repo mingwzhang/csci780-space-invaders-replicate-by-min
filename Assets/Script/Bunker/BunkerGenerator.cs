@@ -81,8 +81,6 @@ public class BunkerGenerator : MonoBehaviour
                     newBlock.transform.localScale = new Vector3(scaleX, scaleY, 1f);
                 }
 
-                // Match parent layer
-                newBlock.layer = gameObject.layer;
             }
         }
     }

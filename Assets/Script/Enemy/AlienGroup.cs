@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class AlienGroup : MonoBehaviour
 {
@@ -147,8 +148,9 @@ public class AlienGroup : MonoBehaviour
         }
     }
 
-    public void AlienDestroyed()
+    public void AlienDestroyed(Transform alien)
     {
+        alien.SetParent(null, true);
         // Deduct time from the interval to make them step faster
         moveIntervalTimer -= timeDeductionPerKill;
 

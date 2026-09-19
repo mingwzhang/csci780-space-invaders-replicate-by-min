@@ -52,7 +52,7 @@ public class Alien : MonoBehaviour
 
             if (group != null)
             {
-                group.AlienDestroyed(); // For each alien destroyed, speed up the group
+                group.AlienDestroyed(transform); // For each alien destroyed, speed up the group
             }
             gameManager.AddScore(scoreValue);
             StartCoroutine(DestroyAlien());
