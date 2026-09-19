@@ -21,15 +21,17 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text highScoreText;
-    
+
+    private int enemyCount = 55;
     private int score = 0;
     private int highScore = 0;
-
     private bool isGameOver = false;
 
     // Set up UI, score, high score, and player health icons
     void Start()
     {
+        enemyCount = 55;
+
         playerHealthText.text = playerHealth.ToString();
         gameOverText.SetActive(false);
 
@@ -49,6 +51,11 @@ public class GameManager : MonoBehaviour
         {
             RestartGame();
         }
+    }
+
+    public int GetEnemyCount()
+    {
+        return enemyCount;
     }
 
     // Reload the current scene

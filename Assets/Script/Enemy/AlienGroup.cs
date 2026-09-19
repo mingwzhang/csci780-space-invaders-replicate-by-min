@@ -5,19 +5,20 @@ using UnityEngine.UIElements;
 public class AlienGroup : MonoBehaviour
 {
     private float moveDistance = 0.2f;
-    private float moveIntervalTimer = 0.5f;
-    private float timeDeductionPerKill = 0.0095f;
-    private float minimumInterval = 0.01f;
+    private float startingInterval = 1.0f;
+    private float moveIntervalTimer = 1.0f;
+    private float minimumInterval = 0.007f;
+    private float timeDeductionPerKill;
 
-    private float leftBorder = -10f;
-    private float rightBorder = 10f;
+    private float leftBorder = -9.5f;
+    private float rightBorder = 9.5f;
     private float dropDistance = 0.25f;
 
     private int direction = 1;
     private float timer;
 
-    private float minShootInterval = 0.3f;
-    private float maxShootInterval = 1.5f;
+    private float minShootInterval = 0.2f;
+    private float maxShootInterval = 1.0f;
 
     private float shootInterval;
     private float shootTimer;
@@ -31,11 +32,13 @@ public class AlienGroup : MonoBehaviour
     void Start()
     {
         shootInterval = Random.Range(minShootInterval, maxShootInterval);
+        timeDeductionPerKill = (startingInterval - minimumInterval) / gameManager.GetEnemyCount() * 1.015f;
     }
 
     void Update()
     {
         CheckGameOver();
+
 
         // Shooting timer
         shootTimer += Time.deltaTime;
@@ -49,8 +52,11 @@ public class AlienGroup : MonoBehaviour
             shootInterval = Random.Range(minShootInterval, maxShootInterval);
         }
 
+        MoveGroup();
+    }
 
-
+    private void MoveGroup()
+    {
         // Movement timer
         timer += Time.deltaTime;
 
@@ -78,7 +84,7 @@ public class AlienGroup : MonoBehaviour
                     nextMove = -moveDistance;
                 }
 
-                else if(direction == -1 && nextPosition <= leftBorder)
+                else if (direction == -1 && nextPosition <= leftBorder)
                 {
                     // Move down and reverse direction
                     transform.Translate(0f, -dropDistance, 0f, Space.World);
@@ -91,9 +97,25 @@ public class AlienGroup : MonoBehaviour
         transform.Translate(nextMove, 0f, 0f, Space.World);
     }
 
+
+
+    private void UpdateAnimationSpeed()
+    {
+        float animationSpeed = 1f / moveIntervalTimer;
+
+        foreach (Transform row in transform)
+        {
+            foreach (Transform alien in row)
+            {
+                Animator animator = alien.GetComponentInChildren<Animator>();
+                animator.speed = animationSpeed;
+            }
+        }
+    }
+
     private void RandomAlienShoot()
     {
-        // This array is rebuilt every time this method runs, searches this GameObject and all of its children for Alien components
+        // The array is rebuilt every time this method runs, searches this GameObject and all of its children for Alien components
         Alien[] aliens = GetComponentsInChildren<Alien>();
 
         // Temporary list rebuilt from scratch every time this method runs
@@ -154,13 +176,14 @@ public class AlienGroup : MonoBehaviour
         // Deduct time from the interval to make them step faster
         moveIntervalTimer -= timeDeductionPerKill;
 
-        // Ensure it doesn't drop past the absolute maximum speed threshold
+        // Ensure it doesn't drop past the maximum speed threshold
         if (moveIntervalTimer < minimumInterval)
         {
             moveIntervalTimer = minimumInterval;
         }
-        // Debug.Log(moveIntervalTimer);
+        Debug.Log(moveIntervalTimer);
 
+        UpdateAnimationSpeed();
     }
 
     private void CheckGameOver()

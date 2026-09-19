@@ -3,7 +3,7 @@ using UnityEngine;
 public class AlienBullet : MonoBehaviour
 {
     private float speed = 10f;
-    private float bottomDistanceLimit = -15f;
+    private float bottomDistanceLimit = 0.0f;
 
     private Animator bulletAnimator;
 

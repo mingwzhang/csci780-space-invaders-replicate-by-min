@@ -5,7 +5,7 @@ public class UFOSpawner : MonoBehaviour
 
     [SerializeField] private GameObject ufoPrefab;
 
-    private float spawnTimer = 25f;
+    private float spawnTimer = 35f;
     private float currentTimer = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

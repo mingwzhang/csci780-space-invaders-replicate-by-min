@@ -6,8 +6,8 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     private float speed = 5f;
-    private float leftBorder = -10f;
-    private float rightBorder = 10f;
+    private float leftBorder = -9f;
+    private float rightBorder = 9f;
 
     [SerializeField] private GameObject playerBullet;
 
