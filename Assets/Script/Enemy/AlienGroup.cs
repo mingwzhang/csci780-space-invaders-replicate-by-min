@@ -181,7 +181,7 @@ public class AlienGroup : MonoBehaviour
         {
             moveIntervalTimer = minimumInterval;
         }
-        Debug.Log(moveIntervalTimer);
+        //Debug.Log(moveIntervalTimer);
 
         UpdateAnimationSpeed();
     }
