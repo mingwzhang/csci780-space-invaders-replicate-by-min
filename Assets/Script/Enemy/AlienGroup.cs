@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+
+// Controls alien group movement, shooting, speed progression, and game-over detection
 
 public class AlienGroup : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class AlienGroup : MonoBehaviour
     void Start()
     {
         shootInterval = Random.Range(minShootInterval, maxShootInterval);
+
+        // Calculate how much to reduce the movement interval for each destroyed alien
         timeDeductionPerKill = (startingInterval - minimumInterval) / gameManager.GetEnemyCount() * 1.015f;
     }
 
@@ -170,13 +173,16 @@ public class AlienGroup : MonoBehaviour
         }
     }
 
-    public void AlienDestroyed(Transform alien)
+
+    // Speeds up the group for each alien destroyed
+    public void AlienDestroyedSpeedUp(Transform alien)
     {
+        // Detach the destroyed alien so it no longer moves with the group
         alien.SetParent(null, true);
         // Deduct time from the interval to make them step faster
         moveIntervalTimer -= timeDeductionPerKill;
 
-        // Ensure it doesn't drop past the maximum speed threshold
+        // Ensure the movement interval doesn't go below the minimum
         if (moveIntervalTimer < minimumInterval)
         {
             moveIntervalTimer = minimumInterval;

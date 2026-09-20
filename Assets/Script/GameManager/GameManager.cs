@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 
+// Controls overall game state, player health, score, high score, game over, and scene restarts
+
 public class GameManager : MonoBehaviour
 {
     private int playerHealth = 3;
@@ -23,13 +25,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text highScoreText;
 
     private int enemyCount = 55;
-    private int score = 0;
+    private static int score = 0;
     private int highScore = 0;
     private bool isGameOver = false;
+    private bool isRestarting = false;
+
 
     // Set up UI, score, high score, and player health icons
     void Start()
     {
+        // Reset the saved high score for a fresh game release (Comment out or remove these 2 lines after resetting for release)
+        //PlayerPrefs.DeleteKey("HighScore");
+        //PlayerPrefs.Save();
+
         enemyCount = 55;
 
         playerHealthText.text = playerHealth.ToString();
@@ -58,9 +66,35 @@ public class GameManager : MonoBehaviour
         return enemyCount;
     }
 
+    // To trigger win condition
+    public void EnemyDestroyed()
+    {
+        enemyCount--;
+
+        //Debug.Log(enemyCount);
+
+        // isRestarting is guard condition
+        if (enemyCount <= 0 && !isRestarting)
+        {
+            isRestarting = true;
+            StartCoroutine(RestartAfterClear());
+        }
+    }
+
     // Reload the current scene
     private void RestartGame()
     {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    // Reload the scene after clearing all enemy (except UFO)
+    private IEnumerator RestartAfterClear()
+    {
+        Time.timeScale = 0f;
+
+        yield return new WaitForSecondsRealtime(2f);
+
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -150,6 +184,9 @@ public class GameManager : MonoBehaviour
         playerHealthText.text = playerHealth.ToString();
         RemoveAllHealthUI();
 
+        ResetScore();
+        scoreText.text = score.ToString("D4");
+
         Time.timeScale = 0f;
 
         StartCoroutine(GameOverSequence(player));
@@ -181,5 +218,10 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("HighScore", highScore);
             PlayerPrefs.Save();
         }
+    }
+
+    public static void ResetScore()
+    {
+        score = 0;
     }
 }

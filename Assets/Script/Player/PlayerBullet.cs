@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerBullet : MonoBehaviour
 {
-    private float speed = 30.0f;
+    private float speed = 25.0f;
 
     private float upDistnaceLimit = 15.5f;
     private Animator animator;

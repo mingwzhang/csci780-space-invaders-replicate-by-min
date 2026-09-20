@@ -10,6 +10,7 @@ public class Alien : MonoBehaviour
 
     private Animator childAnimator;
     private Collider2D alienCollider;
+    private bool isDestroyed = false;
 
     void Awake()
     {
@@ -48,17 +49,29 @@ public class Alien : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
         {
+            // Instant guard to prevent multiple bullets from registering the same enemy
+            if (isDestroyed)
+            {
+                return;
+            }
+
+            // Mark as destroyed immediately before another collision can occur
+            isDestroyed = true;
+
+            alienCollider.enabled = false;
+
             AlienGroup group = GetComponentInParent<AlienGroup>();
 
             if (group != null)
             {
-                group.AlienDestroyed(transform); // For each alien destroyed, speed up the group
+                // For each alien destroyed, speed up the group
+                group.AlienDestroyedSpeedUp(transform);
             }
+
             gameManager.AddScore(scoreValue);
             StartCoroutine(DestroyAlien());
         }
     }
-
 
     private IEnumerator DestroyAlien()
     {
@@ -71,6 +84,7 @@ public class Alien : MonoBehaviour
         float clipLength = childAnimator.GetCurrentAnimatorStateInfo(0).length;
 
         yield return new WaitForSecondsRealtime(clipLength);
+        gameManager.EnemyDestroyed();
         Destroy(gameObject);
 
     }
