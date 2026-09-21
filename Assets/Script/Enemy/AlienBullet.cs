@@ -4,7 +4,6 @@ public class AlienBullet : MonoBehaviour
 {
     private float speed = 10f;
     private float bottomDistanceLimit = 0.0f;
-
     private Animator bulletAnimator;
 
     private void Awake()

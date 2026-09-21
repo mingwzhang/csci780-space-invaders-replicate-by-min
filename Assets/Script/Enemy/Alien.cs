@@ -75,6 +75,7 @@ public class Alien : MonoBehaviour
         childAnimator.speed = 1f;
         childAnimator.Play("alien_destroyed");
 
+        // Wait 1 next frame so the animator can process the play request. Without this, the line below reads 0 seconds because the state hasn't shifted yet.
         yield return null;
 
         // Read the exact length of the animation currently playing on the child

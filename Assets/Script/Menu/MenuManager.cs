@@ -16,7 +16,7 @@ public class MainMenuManager : MonoBehaviour
     void StartGame()
     {
         // ResetSore is static
-        GameManager.ResetScore();
+        GameManager.ResetData();
 
         // Can be checked in FIle > Build Profiles > Scene List
         SceneManager.LoadScene(1);

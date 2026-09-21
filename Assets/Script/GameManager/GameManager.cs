@@ -9,7 +9,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
-    private int playerHealth = 3;
+    private static int playerHealth = 3;
     //private float deathPauseDuration = 1.5f;
 
     [SerializeField] private GameObject playerPrefab;
@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     private int highScore = 0;
     private bool isGameOver = false;
     private bool isRestarting = false;
+    private bool addHPBonus = false;
 
 
     // Set up UI, score, high score, and player health icons
@@ -111,9 +112,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Add one health icon
+    public void AddHealthUI()
+    {
+        playerHealthText.text = playerHealth.ToString();
+
+        GameObject newHealthUI = Instantiate(playerUIPrefab, healthUISpawnPoint.transform);
+
+        // NOTE: This does NOT decrease player health. It only borrows the value 
+        // Index positions start at 0, so the Nth life icon sits at position (N - 1)
+        newHealthUI.transform.localPosition = new Vector3((playerHealth - 1) * healthUIPosGap, 0, 0);
+    }
+
     // Remove one health icon
     public void RemoveHealthUI()
     {
+        playerHealthText.text = playerHealth.ToString();
         if (healthUISpawnPoint.transform.childCount > 0)
         {
             Destroy(healthUISpawnPoint.transform.GetChild(healthUISpawnPoint.transform.childCount - 1).gameObject);
@@ -123,6 +137,7 @@ public class GameManager : MonoBehaviour
     // Remove all health icons
     public void RemoveAllHealthUI()
     {
+        playerHealthText.text = playerHealth.ToString();
         foreach (Transform child in healthUISpawnPoint.transform)
         {
             Destroy(child.gameObject);
@@ -138,7 +153,6 @@ public class GameManager : MonoBehaviour
         }
 
         playerHealth--;
-        playerHealthText.text = playerHealth.ToString();
         RemoveHealthUI();
 
         if (playerHealth <= 0)
@@ -181,10 +195,9 @@ public class GameManager : MonoBehaviour
         StopAllCoroutines();  
 
         playerHealth = 0;
-        playerHealthText.text = playerHealth.ToString();
         RemoveAllHealthUI();
 
-        ResetScore();
+        ResetData();
         scoreText.text = score.ToString("D4");
 
         Time.timeScale = 0f;
@@ -218,10 +231,19 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("HighScore", highScore);
             PlayerPrefs.Save();
         }
+
+        if (!addHPBonus && score >= 1500)
+        {
+            addHPBonus = true;
+            playerHealth++;
+            AddHealthUI();
+
+        }
     }
 
-    public static void ResetScore()
+    public static void ResetData()
     {
         score = 0;
+        playerHealth = 3;
     }
 }

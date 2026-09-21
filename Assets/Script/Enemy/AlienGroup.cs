@@ -26,7 +26,7 @@ public class AlienGroup : MonoBehaviour
 
 
     [SerializeField] private GameManager gameManager;
-    private float gameOverY = 2.0f;
+    private float gameOverY = 4.0f;
 
     private int bulletAnimationNumber = 1;
 
