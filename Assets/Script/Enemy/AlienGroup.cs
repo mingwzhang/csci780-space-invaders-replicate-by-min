@@ -102,7 +102,7 @@ public class AlienGroup : MonoBehaviour
 
 
 
-    private void UpdateAnimationSpeed()
+    private void UpdateAnimationSpeed(Transform destroyedAlien)
     {
         float animationSpeed = 1f / moveIntervalTimer;
 
@@ -110,6 +110,11 @@ public class AlienGroup : MonoBehaviour
         {
             foreach (Transform alien in row)
             {
+                if (alien == destroyedAlien)
+                {
+                    continue;
+                }
+
                 Animator animator = alien.GetComponentInChildren<Animator>();
                 animator.speed = animationSpeed;
             }
@@ -179,6 +184,7 @@ public class AlienGroup : MonoBehaviour
     {
         // Detach the destroyed alien so it no longer moves with the group
         alien.SetParent(null, true);
+
         // Deduct time from the interval to make them step faster
         moveIntervalTimer -= timeDeductionPerKill;
 
@@ -187,9 +193,8 @@ public class AlienGroup : MonoBehaviour
         {
             moveIntervalTimer = minimumInterval;
         }
-        //Debug.Log(moveIntervalTimer);
 
-        UpdateAnimationSpeed();
+        UpdateAnimationSpeed(alien);
     }
 
     private void CheckGameOver()

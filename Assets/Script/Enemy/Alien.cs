@@ -15,7 +15,8 @@ public class Alien : MonoBehaviour
     void Awake()
     {
         if (childAnimator == null) childAnimator = GetComponentInChildren<Animator>();
-        alienCollider = GetComponent<Collider2D> ();
+
+        alienCollider = GetComponent<Collider2D>();
     }
 
 
@@ -23,12 +24,8 @@ public class Alien : MonoBehaviour
     {
         gameManager = FindFirstObjectByType<GameManager>();
 
-        childAnimator = GetComponentInChildren<Animator>();
-
         if (childAnimator == null)   
             Debug.LogError("No Animator found on any child GameObject!", this);
-
-
     }
 
     // Update is called once per frame
@@ -75,8 +72,8 @@ public class Alien : MonoBehaviour
 
     private IEnumerator DestroyAlien()
     {
+        childAnimator.speed = 1f;
         childAnimator.Play("alien_destroyed");
-        alienCollider.enabled = false;
 
         yield return null;
 
@@ -84,8 +81,8 @@ public class Alien : MonoBehaviour
         float clipLength = childAnimator.GetCurrentAnimatorStateInfo(0).length;
 
         yield return new WaitForSecondsRealtime(clipLength);
+
         gameManager.EnemyDestroyed();
         Destroy(gameObject);
-
     }
 }
