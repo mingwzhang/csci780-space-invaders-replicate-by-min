@@ -55,8 +55,7 @@ public class PlayerBullet : MonoBehaviour
             // Start queuing up the explosion animation state
             animator.Play("player_projectile_explode");
 
-            // Wait 1 frame so the animator can process the play request.
-            // Without this, the line below reads 0 seconds because the state hasn't shifted yet.
+            // Wait 1 frame so the animator can process the play request. Without this, the line below reads 0 seconds because the state hasn't shifted yet.
             yield return null;
 
             // Get the length of animation length
