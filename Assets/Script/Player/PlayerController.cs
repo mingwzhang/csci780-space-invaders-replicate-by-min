@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
 
     private float fireRate = 0.4f;  // Minimum number of seconds between shots
     private float nextFireTime;
+
+    private bool isSpecialAttacking = false;
+
     private bool isDying = false;
 
 
@@ -20,12 +23,16 @@ public class PlayerController : MonoBehaviour
     // Time.time = the total time since the game started
 
     // Assign the Animator from the player's child.
-    private Animator childAnimator;
-
+    [SerializeField] private Animator childAnimator;
+    [SerializeField] private Animator childSpecialAnimator;
 
     void Awake()
     {
-        if (childAnimator == null) childAnimator = GetComponentInChildren<Animator>();
+        if (childAnimator == null || childSpecialAnimator == null)
+        {
+            Debug.LogError("Drag Child Animator 1 and 2 into their Inspector slots on the Player script", this);
+        }
+
     }
 
     private void Start()
@@ -52,12 +59,19 @@ public class PlayerController : MonoBehaviour
         if (transform.position.x > rightBorder)
             transform.position = new Vector2(rightBorder, transform.position.y);
 
-        if (Keyboard.current.spaceKey.isPressed && Time.time >= nextFireTime)
+        // Regular attack (Z / Space)
+        if ((Keyboard.current.spaceKey.isPressed || Keyboard.current.zKey.isPressed) && Time.time >= nextFireTime)
         {
             Instantiate(playerBullet, transform.position, transform.rotation);
 
             // Allow the next shot after fireRate seconds have passed
             nextFireTime = Time.time + fireRate;
+        }
+
+        // Special attack (X Key)
+        if (Keyboard.current.xKey.isPressed)
+        {
+            SpecialAttack();
         }
     }
 
@@ -78,13 +92,60 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void SpecialAttack()
+    {
+        if (isSpecialAttacking) return;
+
+        StartCoroutine(SpecialAttackSequence());
+    }
+
+    private IEnumerator SpecialAttackSequence()
+    {
+        isSpecialAttacking = true;
+
+        childAnimator.Play("player_default", 0, 0f);
+
+        // Play the special attack initiation animation
+        childSpecialAnimator.Play("player_special_atk_initiate", 0, 0f);
+
+        // Wait until the initiation animation finishes
+        yield return null;
+
+        float initiateLength = childSpecialAnimator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(initiateLength);
+
+        // Play the looping special attack animation
+        childSpecialAnimator.Play("player_special_atk_loop", 0, 0f);
+
+        // Keep the loop animation playing for 2 seconds
+        yield return new WaitForSeconds(2f);
+
+        // Play the ending animation
+        childSpecialAnimator.Play("player_special_atk_done", 0, 0f);
+
+        // Wait until the ending animation finishes
+        yield return null;
+
+        float doneLength = childSpecialAnimator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(doneLength);
+
+        // Return to default
+        childSpecialAnimator.Play("default", 0, 0f);
+
+        isSpecialAttacking = false;
+    }
+
+
     public IEnumerator DestroyPlayer()
     {
         isDying = true;
 
         // Force the animator to run even if the game is paused (Time.timeScale = 0)
         childAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
-        childAnimator.Play("player_destroyed");
+        childSpecialAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
+
+        childAnimator.Play("player_destroyed", 0, 0f);
+        childSpecialAnimator.Play("default", 0, 0f);
 
         yield return null;
 
@@ -95,4 +156,6 @@ public class PlayerController : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+
 }

@@ -12,11 +12,22 @@ public class BunkerBlock : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         int playerBulletLayer = LayerMask.NameToLayer("PlayerBullet");
+        int playerLaserLayer = LayerMask.NameToLayer("PlayerLaser");
         int enemyBulletLayer = LayerMask.NameToLayer("EnemyBullet");
 
+
         // Ignore the collision if it wasn't caused by a player or enemy bullet
-        if (collision.gameObject.layer != playerBulletLayer && collision.gameObject.layer != enemyBulletLayer)
+        if (collision.gameObject.layer != playerBulletLayer &&
+            collision.gameObject.layer != enemyBulletLayer &&
+            collision.gameObject.layer != playerLaserLayer)
         {
+            return;
+        }
+
+        // Player laser instantly destroys this bunker block
+        if (collision.gameObject.layer == playerLaserLayer)
+        {
+            Destroy(gameObject);
             return;
         }
 
@@ -29,9 +40,7 @@ public class BunkerBlock : MonoBehaviour
         {
             // Player bullets bite upward
             damageCenter += Vector2.up * 0.1f;
-        }
-        else
-        {
+        }else{
             // Enemy bullets bite downward
             damageCenter += Vector2.down * 0.1f;
         }

@@ -44,7 +44,7 @@ public class Alien : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet") || collision.gameObject.layer == LayerMask.NameToLayer("PlayerLaser"))
         {
             // Instant guard to prevent multiple bullets from registering the same enemy
             if (isDestroyed)
