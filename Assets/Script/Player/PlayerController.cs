@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
 
     private bool isDying = false;
 
+    private AudioManager audioManager;
+
 
     // Time.deltaTime = the time since the previous frame, making movement frame-rate independent
     // Time.time = the total time since the game started
@@ -32,6 +34,8 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("Drag Child Animator 1 and 2 into their Inspector slots on the Player script", this);
         }
+
+        audioManager = FindFirstObjectByType<AudioManager>();
 
     }
 
@@ -108,6 +112,8 @@ public class PlayerController : MonoBehaviour
         // Play the special attack initiation animation
         childSpecialAnimator.Play("player_special_atk_initiate", 0, 0f);
 
+        audioManager.PlayLaserLoop();
+
         // Wait until the initiation animation finishes
         yield return null;
 
@@ -122,6 +128,7 @@ public class PlayerController : MonoBehaviour
 
         // Play the ending animation
         childSpecialAnimator.Play("player_special_atk_done", 0, 0f);
+        audioManager.PlayLaserEnding();
 
         // Wait until the ending animation finishes
         yield return null;

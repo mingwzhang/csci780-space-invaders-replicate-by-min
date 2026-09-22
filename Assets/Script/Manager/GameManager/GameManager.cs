@@ -31,6 +31,13 @@ public class GameManager : MonoBehaviour
     private bool isRestarting = false;
     private bool addHPBonus = false;
 
+    private AudioManager audioManager;
+
+
+    private void Awake()
+    {
+        audioManager = FindFirstObjectByType<AudioManager>();
+    }
 
     // Set up UI, score, high score, and player health icons
     void Start()
@@ -92,6 +99,8 @@ public class GameManager : MonoBehaviour
     // Reload the scene after clearing all enemy (except UFO)
     private IEnumerator RestartAfterClear()
     {
+        audioManager.StopAllSounds();
+
         Time.timeScale = 0f;
 
         yield return new WaitForSecondsRealtime(2f);
