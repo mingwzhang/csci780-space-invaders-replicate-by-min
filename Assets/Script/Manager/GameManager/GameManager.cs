@@ -10,7 +10,6 @@ using UnityEngine.SocialPlatforms.Impl;
 public class GameManager : MonoBehaviour
 {
     private static int playerHealth = 3;
-    //private float deathPauseDuration = 1.5f;
 
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject playerUIPrefab;
@@ -26,11 +25,12 @@ public class GameManager : MonoBehaviour
 
     private int enemyCount = 55;
     private static int score = 0;
+    private static bool addHPBonus = false;
+
     private int highScore = 0;
     private bool isGameOver = false;
     private bool isRestarting = false;
-    private bool addHPBonus = false;
-
+ 
     private AudioManager audioManager;
 
 
@@ -249,5 +249,6 @@ public class GameManager : MonoBehaviour
     {
         score = 0;
         playerHealth = 3;
+        addHPBonus = false;
     }
 }

@@ -16,16 +16,21 @@ public class UFO : MonoBehaviour
     private Animator childAnimator;
     private Collider2D ufoCollider;
 
+    private AudioManager audioManager;
+
     void Awake()
     {
         if (childAnimator == null) childAnimator = GetComponentInChildren<Animator>();
         ufoCollider = GetComponent<Collider2D>();
+        audioManager = FindFirstObjectByType<AudioManager>();
+
     }
 
     private void Start()
     {
         gameManager = FindFirstObjectByType<GameManager>();
         scoreValue = scoreArray[Random.Range(0,5)];
+        audioManager.PlayUFOLowPitch();
         print(scoreValue);
     }
 
@@ -34,8 +39,10 @@ public class UFO : MonoBehaviour
         transform.Translate(Vector3.right * speed * Time.deltaTime);
 
         if (transform.position.x > rightDistnaceLimit)
+        {
             Destroy(gameObject);
-
+            audioManager.StopUFOLowPitch();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -43,6 +50,7 @@ public class UFO : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
         {
             gameManager.AddScore(scoreValue);
+            audioManager.StopUFOLowPitch();
             StartCoroutine(DestroyUFO());
         }
     }

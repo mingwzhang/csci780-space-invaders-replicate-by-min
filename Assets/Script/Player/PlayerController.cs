@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
         // Regular attack (Z / Space)
         if ((Keyboard.current.spaceKey.isPressed || Keyboard.current.zKey.isPressed) && Time.time >= nextFireTime)
         {
+            audioManager.PlayPlayerShooting();
             Instantiate(playerBullet, transform.position, transform.rotation);
 
             // Allow the next shot after fireRate seconds have passed
@@ -89,6 +90,8 @@ public class PlayerController : MonoBehaviour
         {
             isDying = true;
 
+            audioManager.PlayPlayerDestroyed();
+
             Vector3 respawnPosition = transform.position;
 
             // Destroy the enemy or enemy bullet only.
@@ -109,9 +112,8 @@ public class PlayerController : MonoBehaviour
     {
         isSpecialAttacking = true;
 
-        childAnimator.Play("player_default", 0, 0f);
-
         // Play the special attack initiation animation
+        childAnimator.Play("player_using_special", 0, 0f);
         childSpecialAnimator.Play("player_special_atk_initiate", 0, 0f);
 
         audioManager.PlayLaserLoop();
@@ -130,6 +132,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         // Play the ending animation
+        childAnimator.Play("player_default", 0, 0f);
         childSpecialAnimator.Play("player_special_atk_done", 0, 0f);
         audioManager.PlayLaserEnding();
         cameraShake.StopShake();

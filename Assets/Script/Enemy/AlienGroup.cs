@@ -10,6 +10,9 @@ public class AlienGroup : MonoBehaviour
     private float moveIntervalTimer = 1.0f;
     private float minimumInterval = 0.007f;
     private float timeDeductionPerKill;
+    private float movementSoundTimer;
+    private float minimumSoundInterval = 0.05f;
+
 
     private float leftBorder = -9.5f;
     private float rightBorder = 9.5f;
@@ -24,11 +27,18 @@ public class AlienGroup : MonoBehaviour
     private float shootInterval;
     private float shootTimer;
 
-
     [SerializeField] private GameManager gameManager;
     private float gameOverY = 4.0f;
-
     private int bulletAnimationNumber = 1;
+    private int movementSoundNumber = 1;
+    private AudioManager audioManager;
+
+
+    void Awake()
+    {
+        audioManager = audioManager = FindFirstObjectByType<AudioManager>();
+    }
+
 
     void Start()
     {
@@ -60,8 +70,15 @@ public class AlienGroup : MonoBehaviour
 
     private void MoveGroup()
     {
+        if (gameManager.GetEnemyCount() <= 0)
+        {
+            return;
+        }
+
         // Movement timer
         timer += Time.deltaTime;
+        // Movement sound timer
+        movementSoundTimer += Time.deltaTime;
 
         if (timer < moveIntervalTimer)
         {
@@ -98,6 +115,36 @@ public class AlienGroup : MonoBehaviour
         }
 
         transform.Translate(nextMove, 0f, 0f, Space.World);
+
+        // Play movement sound, but prevent it from playing too rapidly
+        if (movementSoundTimer >= minimumSoundInterval)
+        {
+            if (movementSoundNumber == 1)
+            {
+                audioManager.PlayFastInvader1();
+            }
+            else if (movementSoundNumber == 2)
+            {
+                audioManager.PlayFastInvader2();
+            }
+            else if (movementSoundNumber == 3)
+            {
+                audioManager.PlayFastInvader3();
+            }
+            else
+            {
+                audioManager.PlayFastInvader4();
+            }
+
+            movementSoundNumber++;
+
+            if (movementSoundNumber > 4)
+            {
+                movementSoundNumber = 1;
+            }
+
+            movementSoundTimer = 0f;
+        }
     }
 
 
@@ -120,6 +167,26 @@ public class AlienGroup : MonoBehaviour
             }
         }
     }
+
+
+    // Speeds up the group for each alien destroyed
+    public void AlienDestroyedSpeedUp(Transform alien)
+    {
+        // Detach the destroyed alien so it no longer moves with the group
+        alien.SetParent(null, true);
+
+        // Deduct time from the interval to make them step faster
+        moveIntervalTimer -= timeDeductionPerKill;
+
+        // Ensure the movement interval doesn't go below the minimum
+        if (moveIntervalTimer < minimumInterval)
+        {
+            moveIntervalTimer = minimumInterval;
+        }
+
+        UpdateAnimationSpeed(alien);
+    }
+
 
     private void RandomAlienShoot()
     {
@@ -176,25 +243,6 @@ public class AlienGroup : MonoBehaviour
         {
             bulletAnimationNumber = 1;
         }
-    }
-
-
-    // Speeds up the group for each alien destroyed
-    public void AlienDestroyedSpeedUp(Transform alien)
-    {
-        // Detach the destroyed alien so it no longer moves with the group
-        alien.SetParent(null, true);
-
-        // Deduct time from the interval to make them step faster
-        moveIntervalTimer -= timeDeductionPerKill;
-
-        // Ensure the movement interval doesn't go below the minimum
-        if (moveIntervalTimer < minimumInterval)
-        {
-            moveIntervalTimer = minimumInterval;
-        }
-
-        UpdateAnimationSpeed(alien);
     }
 
     private void CheckGameOver()

@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 1090974517277358271}
   - component: {fileID: 816283634583565743}
   m_Layer: 8
-  m_Name: UFO
+  m_Name: UFOPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

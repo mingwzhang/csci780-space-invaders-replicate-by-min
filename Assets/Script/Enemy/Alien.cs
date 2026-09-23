@@ -11,12 +11,16 @@ public class Alien : MonoBehaviour
     private Animator childAnimator;
     private Collider2D alienCollider;
     private bool isDestroyed = false;
+    private AudioManager audioManager;
 
     void Awake()
     {
         if (childAnimator == null) childAnimator = GetComponentInChildren<Animator>();
 
         alienCollider = GetComponent<Collider2D>();
+    
+        audioManager = audioManager = FindFirstObjectByType<AudioManager>();
+
     }
 
 
@@ -72,6 +76,8 @@ public class Alien : MonoBehaviour
 
     private IEnumerator DestroyAlien()
     {
+        audioManager.PlayInvaderDestroyed();
+
         childAnimator.speed = 1f;
         childAnimator.Play("alien_destroyed");
 
