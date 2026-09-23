@@ -99,13 +99,8 @@ public class GameManager : MonoBehaviour
     // Reload the scene after clearing all enemy (except UFO)
     private IEnumerator RestartAfterClear()
     {
-        audioManager.StopAllSounds();
-
-        Time.timeScale = 0f;
-
         yield return new WaitForSecondsRealtime(2f);
 
-        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

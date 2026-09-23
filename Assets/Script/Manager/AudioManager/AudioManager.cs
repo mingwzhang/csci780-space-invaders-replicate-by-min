@@ -7,8 +7,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip laserLoop;
     [SerializeField] private AudioClip laserEnding;
 
-    private Coroutine fadeCoroutine;
-
     public void PlayLaserLoop()
     {
         audioSource.clip = laserLoop;
@@ -38,10 +36,5 @@ public class AudioManager : MonoBehaviour
             audioSource.volume += Time.unscaledDeltaTime * 3f;
             yield return null;
         }
-    }
-
-    public void StopAllSounds()
-    {
-        audioSource.Stop();
     }
 }
