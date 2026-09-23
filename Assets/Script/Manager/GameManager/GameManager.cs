@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject healthUISpawnPoint;
     private float healthUIPosGap = 50.0f;
 
-
     [SerializeField] private TMP_Text playerHealthText;
     [SerializeField] private GameObject gameOverText;
 
@@ -63,6 +62,23 @@ public class GameManager : MonoBehaviour
     // Allow the player to restart after game over
     private void Update()
     {
+        if (isGameOver && gameOverText.activeSelf && Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            RestartGame();
+        }
+
+        if (Keyboard.current.pKey.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            if (Time.timeScale == 1f)
+            {
+                Time.timeScale = 0f;
+            }
+            else
+            {
+                Time.timeScale = 1f;
+            }
+        }
+
         if (isGameOver && gameOverText.activeSelf && Keyboard.current.rKey.wasPressedThisFrame)
         {
             RestartGame();
