@@ -33,7 +33,7 @@ public class AudioManager : MonoBehaviour
 
         while (audioSource.volume < 1f)
         {
-            audioSource.volume += Time.unscaledDeltaTime * 3f;
+            audioSource.volume += Time.unscaledDeltaTime * 4f;
             yield return null;
         }
     }

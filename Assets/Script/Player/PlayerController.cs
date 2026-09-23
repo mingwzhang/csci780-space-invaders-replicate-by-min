@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
     private AudioManager audioManager;
 
+    private CameraShake cameraShake;
 
     // Time.deltaTime = the time since the previous frame, making movement frame-rate independent
     // Time.time = the total time since the game started
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
         }
 
         audioManager = FindFirstObjectByType<AudioManager>();
+        cameraShake = FindFirstObjectByType<CameraShake>();
 
     }
 
@@ -113,6 +115,7 @@ public class PlayerController : MonoBehaviour
         childSpecialAnimator.Play("player_special_atk_initiate", 0, 0f);
 
         audioManager.PlayLaserLoop();
+        cameraShake.StartShake();
 
         // Wait until the initiation animation finishes
         yield return null;
@@ -129,6 +132,7 @@ public class PlayerController : MonoBehaviour
         // Play the ending animation
         childSpecialAnimator.Play("player_special_atk_done", 0, 0f);
         audioManager.PlayLaserEnding();
+        cameraShake.StopShake();
 
         // Wait until the ending animation finishes
         yield return null;
