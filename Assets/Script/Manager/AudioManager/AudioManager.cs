@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip laserLoop;
     [SerializeField] private AudioClip laserEnding;
     [SerializeField] private AudioClip ufoLowPitch;
+    [SerializeField] private AudioClip ufoHighPitch;
 
     [SerializeField] private AudioClip fastInvader1;
     [SerializeField] private AudioClip fastInvader2;
@@ -21,6 +22,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip playerDestroyed;
     [SerializeField] private AudioClip invaderDestroyed;
 
+    private int invaderDeathsThisFrame = 0;
+    // Maximum overlapping explosions allowed at once
+    private int maxInvaderSoundsPerFrame = 2; 
+    private int lastProcessedFrame = -1;
 
     public void PlayLaserLoop()
     {
@@ -38,7 +43,7 @@ public class AudioManager : MonoBehaviour
 
         laserSource.loop = false;
         laserSource.clip = laserEnding;
-        laserSource.volume = 1f;
+        laserSource.volume = .4f;
         laserSource.Play();
     }
 
@@ -46,20 +51,30 @@ public class AudioManager : MonoBehaviour
     {
         laserSource.volume = 0f;
 
-        while (laserSource.volume < 1f)
+        while (laserSource.volume < .4f)
         {
             laserSource.volume += Time.unscaledDeltaTime * 4f;
             yield return null;
         }
     }
 
-    public void PlayUFOLowPitch()
+    public void PlayUFOHighPitch()
     {
-        ufoSource.clip = ufoLowPitch;
+        ufoSource.clip = ufoHighPitch;
         ufoSource.loop = true;
         ufoSource.Play();
     }
-    public void StopUFOLowPitch()
+
+    public void PlayUFOLowPitch()
+    {
+        ufoSource.Stop();
+
+        ufoSource.loop = false;
+        ufoSource.clip = ufoLowPitch;
+        ufoSource.Play();
+    }
+
+    public void StopUFOPitch()
     {
         ufoSource.Stop();
     }
@@ -96,7 +111,24 @@ public class AudioManager : MonoBehaviour
 
     public void PlayInvaderDestroyed()
     {
+        // Check if moved to a new frame. If so, reset tracker.
+        if (Time.frameCount != lastProcessedFrame)
+        {
+            invaderDeathsThisFrame = 0;
+            lastProcessedFrame = Time.frameCount;
+        }
+
+        // If already hit our max explosion sound cap for this frame, ignore any extra requests
+        if (invaderDeathsThisFrame >= maxInvaderSoundsPerFrame)
+        {
+            return;
+        }
+
+        // Slightly randomize pitch so overlapping sounds don't phase-cancel each other out
+        sfxSource.pitch = Random.Range(0.9f, 1.1f);
+
         sfxSource.PlayOneShot(invaderDestroyed);
+        invaderDeathsThisFrame++;
     }
 
 }

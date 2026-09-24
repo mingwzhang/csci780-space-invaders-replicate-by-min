@@ -3366,7 +3366,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.7
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4515,6 +4515,7 @@ MonoBehaviour:
   laserLoop: {fileID: 8300000, guid: a1ca28daa01667f4593870814bda7951, type: 3}
   laserEnding: {fileID: 8300000, guid: 14e283db24030c04ca14ac183ebf2ac6, type: 3}
   ufoLowPitch: {fileID: 8300000, guid: 94a54150b314bd443a9b6f67ed7f9281, type: 3}
+  ufoHighPitch: {fileID: 8300000, guid: c31b5050e87413e4cbbaadad20e51728, type: 3}
   fastInvader1: {fileID: 8300000, guid: 0fe4d7e7b6a09434f81c7b21b3b16326, type: 3}
   fastInvader2: {fileID: 8300000, guid: ea61ecace98428e4d9b5cc30429b2a0e, type: 3}
   fastInvader3: {fileID: 8300000, guid: 3e1cb165487a0604daa3c6a1a99ac208, type: 3}
@@ -4570,7 +4571,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.8
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -6639,7 +6640,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.8
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0

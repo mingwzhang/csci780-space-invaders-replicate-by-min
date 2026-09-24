@@ -30,7 +30,7 @@ public class UFO : MonoBehaviour
     {
         gameManager = FindFirstObjectByType<GameManager>();
         scoreValue = scoreArray[Random.Range(0,5)];
-        audioManager.PlayUFOLowPitch();
+        audioManager.PlayUFOHighPitch();
         print(scoreValue);
     }
 
@@ -41,16 +41,16 @@ public class UFO : MonoBehaviour
         if (transform.position.x > rightDistnaceLimit)
         {
             Destroy(gameObject);
-            audioManager.StopUFOLowPitch();
+            audioManager.StopUFOPitch();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet") || collision.gameObject.layer == LayerMask.NameToLayer("PlayerLaser"))
         {
             gameManager.AddScore(scoreValue);
-            audioManager.StopUFOLowPitch();
+            audioManager.PlayUFOLowPitch();
             StartCoroutine(DestroyUFO());
         }
     }
