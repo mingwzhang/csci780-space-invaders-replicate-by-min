@@ -36,10 +36,16 @@ public class PlayerBullet : MonoBehaviour
     {
         if (isExploding) return;
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") || collision.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             Destroy(gameObject);
         }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
+        {
+            TriggerExplosion();
+        }
+        
     }
     private void TriggerExplosion()
     {
