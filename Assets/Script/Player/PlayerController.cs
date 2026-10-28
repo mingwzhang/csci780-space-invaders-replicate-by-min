@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     // Assign the Animator from the player's child.
     [SerializeField] private Animator childAnimator;
     [SerializeField] private Animator childSpecialAnimator;
-
+    [SerializeField] private GameObject specialAttackObject;
     void Awake()
     {
         if (childAnimator == null || childSpecialAnimator == null)
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        
+        specialAttackObject.SetActive(true);
     }
 
     void Update()

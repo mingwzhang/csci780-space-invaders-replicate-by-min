@@ -32,6 +32,24 @@ public class GameManager : MonoBehaviour
  
     private AudioManager audioManager;
 
+    public enum LevelType
+    {
+        Standard,
+        Standard_Boss,
+
+        Limitless,
+    }
+    [Header("Level Settings")]
+    [SerializeField] private LevelType levelType = LevelType.Standard;
+
+    public LevelType CurrentLevelType => levelType;
+
+    [Header("Boss Settings")]
+    [SerializeField] private string bossSceneName = "StandardBoss";
+
+    [SerializeField] private int bossMaxHealth = 20;
+    private int bossHealth;
+
 
     private void Awake()
     {
@@ -56,7 +74,7 @@ public class GameManager : MonoBehaviour
         highScoreText.text = highScore.ToString("D4");
 
         SpawnHealthUI();
-
+        bossHealth = bossMaxHealth;
     }
 
     // Allow the player to restart after game over
@@ -78,11 +96,6 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1f;
             }
         }
-
-        if (isGameOver && gameOverText.activeSelf && Keyboard.current.rKey.wasPressedThisFrame)
-        {
-            RestartGame();
-        }
     }
 
     public int GetEnemyCount()
@@ -91,14 +104,30 @@ public class GameManager : MonoBehaviour
     }
 
     // To trigger win condition
+    // Track destroyed enemies for Standard and Limitless levels
     public void EnemyDestroyed()
     {
+        if (levelType == LevelType.Standard_Boss || isRestarting || isGameOver)
+            return;
+
         enemyCount--;
 
-        //Debug.Log(enemyCount);
+        if (enemyCount <= 0)
+        {
+            isRestarting = true;
+            StartCoroutine(RestartAfterClear());
+        }
+    }
 
-        // isRestarting is guard condition
-        if (enemyCount <= 0 && !isRestarting)
+    // Reduce boss health and trigger win condition
+    public void DamageBoss(int damage)
+    {
+        if (levelType != LevelType.Standard_Boss || isRestarting || isGameOver || damage <= 0)
+            return;
+
+        bossHealth = Mathf.Max(0, bossHealth - damage);
+
+        if (bossHealth <= 0)
         {
             isRestarting = true;
             StartCoroutine(RestartAfterClear());
@@ -112,12 +141,27 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    // Reload the scene after clearing all enemy (except UFO)
+    // Handle level completion based on level type
     private IEnumerator RestartAfterClear()
     {
         yield return new WaitForSecondsRealtime(2f);
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1f;
+
+        switch (levelType)
+        {
+            case LevelType.Standard:
+                SceneManager.LoadScene(bossSceneName);
+                break;
+
+            case LevelType.Standard_Boss:
+                Debug.Log("Boss Defeated! Level Complete!");
+                break;
+
+            case LevelType.Limitless:
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                break;
+        }
     }
 
     // Create the health icons based on current player health
