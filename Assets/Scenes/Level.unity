@@ -5006,9 +5006,21 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2741968662499072323, guid: 004a7e092658bd74cb9852acc3f3c7b6, type: 3}
+      propertyPath: specialAttackObject
+      value: 
+      objectReference: {fileID: 1892703284}
     - target: {fileID: 3992407054862650075, guid: 004a7e092658bd74cb9852acc3f3c7b6, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268402745627923806, guid: 004a7e092658bd74cb9852acc3f3c7b6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6646151928499323963, guid: 004a7e092658bd74cb9852acc3f3c7b6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7549284463621507526, guid: 004a7e092658bd74cb9852acc3f3c7b6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6025,6 +6037,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8142105136463506745, guid: e32c4e84912e3ce45972d81121d74f61, type: 3}
   m_PrefabInstance: {fileID: 1882987239}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1892703284 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6268402745627923806, guid: 004a7e092658bd74cb9852acc3f3c7b6, type: 3}
+  m_PrefabInstance: {fileID: 1448884783}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1929082552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6286,6 +6303,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   enemyGroup: {fileID: 565613286}
   player: {fileID: 65685865}
+  boss: {fileID: 0}
+  bossPosition: {fileID: 0}
+  enemySpawnDelay: 0.02
+  enemyMoveDuration: 1.5
+  bossScaleDuration: 1
 --- !u!1001 &2015978739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7072,6 +7094,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1792743072}
+  - {fileID: 2001457823}
   - {fileID: 1287851310}
   - {fileID: 519420032}
   - {fileID: 905507657}
@@ -7081,5 +7104,4 @@ SceneRoots:
   - {fileID: 629467271}
   - {fileID: 891446486}
   - {fileID: 116927975}
-  - {fileID: 2001457823}
   - {fileID: 1448884783}
