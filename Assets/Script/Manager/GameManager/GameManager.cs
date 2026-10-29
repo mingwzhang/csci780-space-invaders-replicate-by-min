@@ -56,8 +56,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Boss Level Settings")]
     [SerializeField] private int bossMaxHealth = 50;
-    [SerializeField] private GameObject victoryText;
     [SerializeField] private string mainMenuSceneName = "Menu";
+
+    [SerializeField] private GameObject victoryText;
 
     [SerializeField] private GameObject victoryToMainMenuText;
     [SerializeField] private float victoryInputDelay = 2.5f;
@@ -94,16 +95,15 @@ public class GameManager : MonoBehaviour
         currentLaserCharge = 0f;
         UpdateLaserEnergyUI();
 
+        if (victoryText != null)
+            victoryText.SetActive(false);
+        if (victoryToMainMenuText != null)
+            victoryToMainMenuText.SetActive(false);
+
         // Boss level only
         if (levelType == LevelType.Standard_Boss)
         {
             bossHealth = bossMaxHealth;
-
-            if (victoryText != null)
-                victoryText.SetActive(false);
-
-            if (victoryToMainMenuText != null)
-                victoryToMainMenuText.SetActive(false);
         }
     }
 

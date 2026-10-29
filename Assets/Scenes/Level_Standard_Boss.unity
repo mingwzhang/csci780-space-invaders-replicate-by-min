@@ -5439,6 +5439,14 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1780459760}
+    - target: {fileID: 3977974490546213656, guid: 3201418ba77b9014b8b635af76fda756, type: 3}
+      propertyPath: bulletCount
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977974490546213656, guid: 3201418ba77b9014b8b635af76fda756, type: 3}
+      propertyPath: bulletSpawnDelay
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 6809437663408623823, guid: 3201418ba77b9014b8b635af76fda756, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
