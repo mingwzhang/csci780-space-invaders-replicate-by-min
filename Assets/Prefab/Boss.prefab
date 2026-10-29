@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 5647501275498038912}
   - component: {fileID: 3673626373061968406}
   - component: {fileID: 2546773387868673082}
-  m_Layer: 0
+  - component: {fileID: 8596640174604807103}
+  - component: {fileID: 8387427596346314462}
+  m_Layer: 12
   m_Name: BossArmLeftAnim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +32,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1770097805596449991}
   m_Father: {fileID: 6240380819099231109}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3673626373061968406
@@ -82,16 +85,16 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7328565027338108341, guid: 1bc005ede16eb3a47a971657f9af3ea8, type: 3}
+  m_Sprite: {fileID: 514590288544012698, guid: de6d5789da2e1cb46b0f16b4548fe021, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.6875, y: 3.8125}
+  m_Size: {x: 5.375, y: 6.375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 1
+  m_SpriteSortPoint: 0
 --- !u!95 &2546773387868673082
 Animator:
   serializedVersion: 7
@@ -114,6 +117,75 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8596640174604807103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6732371054374483326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1776d898b9204f64f88a8135125ba114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  armAnimator: {fileID: 2546773387868673082}
+  maxHealth: 30
+  hitFlashDuration: 0.15
+  minAttackDelay: 3
+  maxAttackDelay: 6
+  bulletPrefab: {fileID: 1476688834169470998, guid: 3f2e8c9215a5ccc449a54ef388c84d47, type: 3}
+  bulletSpawnPoint: {fileID: 1770097805596449991}
+  bulletCount: 8
+  bulletSpacing: 1
+  bulletSpawnDelay: 0.08
+  spreadAngle: 45
+--- !u!61 &8387427596346314462
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6732371054374483326}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -3.2828913, y: 4.90625}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 1.04, y: -0.7868852}
+    oldSize: {x: 4.6875, y: 3.8125}
+    newSize: {x: 5.375, y: 6.375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 3.1842177, y: 3.8125}
+  m_EdgeRadius: 0
 --- !u!1 &7015165837206024537
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,7 +229,9 @@ GameObject:
   - component: {fileID: 8324674412866166894}
   - component: {fileID: 1798664902876320427}
   - component: {fileID: 3749645471891017233}
-  m_Layer: 0
+  - component: {fileID: 3977974490546213656}
+  - component: {fileID: 6203932448568486455}
+  m_Layer: 12
   m_Name: BossArmRightAnim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +250,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7805956889891908179}
   m_Father: {fileID: 6240380819099231109}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1798664902876320427
@@ -226,18 +301,18 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1269336151448141411, guid: 1bc005ede16eb3a47a971657f9af3ea8, type: 3}
+  m_Sprite: {fileID: -3476293580727063872, guid: 04c9e4051323b8b449bf9b6ba8271227, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.125, y: 2.625}
+  m_Size: {x: 5.125, y: 2.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!95 &3749645471891017233
 Animator:
   serializedVersion: 7
@@ -260,6 +335,135 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3977974490546213656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7675341913526301442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14861a666717f204da992b3b6f0f8fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  armAnimator: {fileID: 3749645471891017233}
+  maxHealth: 30
+  hitFlashDuration: 0.15
+  minAttackDelay: 4
+  maxAttackDelay: 8
+  bulletPrefab: {fileID: 4648567416522112259, guid: d243273ec3023ab48aa5bfa04a56514f, type: 3}
+  bulletSpawnPoint: {fileID: 7805956889891908179}
+  bulletCount: 4
+  bulletSpawnDelay: 1
+--- !u!61 &6203932448568486455
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7675341913526301442}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 3.823616, y: 6.6875}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: -0.14634147, y: -2.15}
+    oldSize: {x: 5.125, y: 2.5}
+    newSize: {x: 5.125, y: 2.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 4.102768, y: 2.625}
+  m_EdgeRadius: 0
+--- !u!1 &8561097683853195552
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1770097805596449991}
+  m_Layer: 12
+  m_Name: BulletSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1770097805596449991
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8561097683853195552}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.84, y: 1.51, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5647501275498038912}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8784793098233637002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7805956889891908179}
+  m_Layer: 12
+  m_Name: Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7805956889891908179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8784793098233637002}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.32, y: 1.97, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8324674412866166894}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9059735176167298249
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +475,9 @@ GameObject:
   - component: {fileID: 6240380819099231109}
   - component: {fileID: 7746482933389543799}
   - component: {fileID: 6603526947109634608}
-  m_Layer: 0
+  - component: {fileID: 7431675871926654545}
+  - component: {fileID: 1711092886918439511}
+  m_Layer: 12
   m_Name: BossMainBodyAnim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,14 +548,14 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7723440047260368847, guid: 1bc005ede16eb3a47a971657f9af3ea8, type: 3}
+  m_Sprite: {fileID: 7328565027338108341, guid: 1bc005ede16eb3a47a971657f9af3ea8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.6875, y: 3.8125}
+  m_Size: {x: 5.375, y: 6.375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -376,3 +582,61 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!61 &7431675871926654545
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9059735176167298249}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 6.3125}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: -0.49019608}
+    oldSize: {x: 5.375, y: 6.375}
+    newSize: {x: 5.375, y: 6.375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 5.375, y: 6.375}
+  m_EdgeRadius: 0
+--- !u!114 &1711092886918439511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9059735176167298249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176df619c96bddf499fde557fe330f17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'

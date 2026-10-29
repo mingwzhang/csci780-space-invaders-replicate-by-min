@@ -73,6 +73,8 @@ public class MainIntroAnimation : MonoBehaviour
         // Start the actual game
         Time.timeScale = 1f;
 
+        Debug.Log("Intro Finished! Time Scale: " + Time.timeScale);
+
         // Disable intro object
         gameObject.SetActive(false);
     }

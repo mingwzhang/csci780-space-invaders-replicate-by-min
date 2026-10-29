@@ -7017,6 +7017,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3977974490546213656, guid: 3201418ba77b9014b8b635af76fda756, type: 3}
+      propertyPath: bulletCount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977974490546213656, guid: 3201418ba77b9014b8b635af76fda756, type: 3}
+      propertyPath: bulletSpawnDelay
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6809437663408623823, guid: 3201418ba77b9014b8b635af76fda756, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -7061,8 +7069,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
-    - target: {fileID: 7015165837206024537, guid: 3201418ba77b9014b8b635af76fda756, type: 3}
-      propertyPath: m_IsActive
+    - target: {fileID: 8596640174604807103, guid: 3201418ba77b9014b8b635af76fda756, type: 3}
+      propertyPath: maxAttackDelay
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8596640174604807103, guid: 3201418ba77b9014b8b635af76fda756, type: 3}
+      propertyPath: minAttackDelay
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

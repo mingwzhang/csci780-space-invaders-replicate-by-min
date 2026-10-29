@@ -110,6 +110,7 @@ MonoBehaviour:
   playerBullet: {fileID: 1476688834169470998, guid: 7e73baa59d0e77346ab2a5b79a538864, type: 3}
   childAnimator: {fileID: 7025849149467894004}
   childSpecialAnimator: {fileID: 7619975063320966911}
+  specialAttackObject: {fileID: 6268402745627923806}
 --- !u!50 &5771169710300352636
 Rigidbody2D:
   serializedVersion: 5
