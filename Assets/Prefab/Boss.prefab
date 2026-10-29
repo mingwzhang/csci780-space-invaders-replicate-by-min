@@ -130,10 +130,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   armAnimator: {fileID: 2546773387868673082}
-  maxHealth: 30
+  maxHealth: 50
   hitFlashDuration: 0.15
-  minAttackDelay: 3
-  maxAttackDelay: 6
+  minAttackDelay: 1
+  maxAttackDelay: 5
   bulletPrefab: {fileID: 1476688834169470998, guid: 3f2e8c9215a5ccc449a54ef388c84d47, type: 3}
   bulletSpawnPoint: {fileID: 1770097805596449991}
   bulletCount: 8
@@ -177,8 +177,8 @@ BoxCollider2D:
   m_Offset: {x: -3.2828913, y: 4.90625}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 1.04, y: -0.7868852}
-    oldSize: {x: 4.6875, y: 3.8125}
+    pivot: {x: 1.0131578, y: -0.83870965}
+    oldSize: {x: 4.75, y: 3.875}
     newSize: {x: 5.375, y: 6.375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -348,14 +348,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   armAnimator: {fileID: 3749645471891017233}
-  maxHealth: 30
+  maxHealth: 50
   hitFlashDuration: 0.15
-  minAttackDelay: 4
-  maxAttackDelay: 8
+  minAttackDelay: 3
+  maxAttackDelay: 6
   bulletPrefab: {fileID: 4648567416522112259, guid: d243273ec3023ab48aa5bfa04a56514f, type: 3}
   bulletSpawnPoint: {fileID: 7805956889891908179}
-  bulletCount: 4
-  bulletSpawnDelay: 1
+  bulletCount: 15
+  bulletSpawnDelay: 0.4
 --- !u!61 &6203932448568486455
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -393,8 +393,8 @@ BoxCollider2D:
   m_Offset: {x: 3.823616, y: 6.6875}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: -0.14634147, y: -2.15}
-    oldSize: {x: 5.125, y: 2.5}
+    pivot: {x: 0.27868855, y: -0.11578948}
+    oldSize: {x: 3.8125, y: 5.9375}
     newSize: {x: 5.125, y: 2.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -640,3 +640,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176df619c96bddf499fde557fe330f17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  bodySprite: {fileID: 7746482933389543799}
+  moveDistance: 0.5
+  moveInterval: 1
+  leftBorder: -7
+  rightBorder: 7
+  hitFlashDuration: 0.15

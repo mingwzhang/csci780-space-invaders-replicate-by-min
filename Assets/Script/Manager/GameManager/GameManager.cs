@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
+
 
 // Controls overall game state, player health, score, high score, game over, and scene restarts
 
@@ -21,6 +23,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text highScoreText;
+
+    [Header("Laser Energy Settings")]
+    [SerializeField] private Slider laserEnergySlider;
+    [SerializeField] private GameObject laserReadyText;
+    [SerializeField] private float laserChargeDuration = 10f;
+
+    private float currentLaserCharge;
 
     private int enemyCount = 55;
     private static int score = 0;
@@ -41,15 +50,22 @@ public class GameManager : MonoBehaviour
     }
     [Header("Level Settings")]
     [SerializeField] private LevelType levelType = LevelType.Standard;
+    [SerializeField] private string bossSceneName = "StandardBoss";
 
     public LevelType CurrentLevelType => levelType;
 
-    [Header("Boss Settings")]
-    [SerializeField] private string bossSceneName = "StandardBoss";
+    [Header("Boss Level Settings")]
+    [SerializeField] private int bossMaxHealth = 50;
+    [SerializeField] private GameObject victoryText;
+    [SerializeField] private string mainMenuSceneName = "Menu";
 
-    [SerializeField] private int bossMaxHealth = 20;
+    [SerializeField] private GameObject victoryToMainMenuText;
+    [SerializeField] private float victoryInputDelay = 2.5f;
+
+    private bool canReturnToMenu;
+
     private int bossHealth;
-
+    private bool isVictory;
 
     private void Awake()
     {
@@ -74,12 +90,37 @@ public class GameManager : MonoBehaviour
         highScoreText.text = highScore.ToString("D4");
 
         SpawnHealthUI();
-        bossHealth = bossMaxHealth;
+
+        currentLaserCharge = 0f;
+        UpdateLaserEnergyUI();
+
+        // Boss level only
+        if (levelType == LevelType.Standard_Boss)
+        {
+            bossHealth = bossMaxHealth;
+
+            if (victoryText != null)
+                victoryText.SetActive(false);
+
+            if (victoryToMainMenuText != null)
+                victoryToMainMenuText.SetActive(false);
+        }
     }
 
     // Allow the player to restart after game over
     private void Update()
     {
+        if (isVictory)
+        {
+            if (canReturnToMenu && Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame)
+            {
+                Time.timeScale = 1f;
+                SceneManager.LoadScene(mainMenuSceneName);
+            }
+
+            return;
+        }
+
         if (isGameOver && gameOverText.activeSelf && Keyboard.current.rKey.wasPressedThisFrame)
         {
             RestartGame();
@@ -87,15 +128,39 @@ public class GameManager : MonoBehaviour
 
         if (Keyboard.current.pKey.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            if (Time.timeScale == 1f)
-            {
-                Time.timeScale = 0f;
-            }
-            else
-            {
-                Time.timeScale = 1f;
-            }
+            Time.timeScale = Time.timeScale == 1f ? 0f : 1f;
         }
+
+        UpdateLaserEnergy();
+    }
+
+    // Recharge laser energy over time
+    private void UpdateLaserEnergy()
+    {
+        if (isGameOver || isRestarting) return;
+
+        currentLaserCharge = Mathf.MoveTowards(currentLaserCharge, laserChargeDuration, Time.deltaTime);
+
+        UpdateLaserEnergyUI();
+    }
+
+    // Update laser energy bar and ready text
+    private void UpdateLaserEnergyUI()
+    {
+        laserEnergySlider.value = Mathf.Clamp01(currentLaserCharge / Mathf.Max(0.01f, laserChargeDuration));
+
+        laserReadyText.SetActive(currentLaserCharge >= laserChargeDuration);
+    }
+
+    // Consume laser energy when the special attack is used
+    public bool TryConsumeLaserEnergy()
+    {
+        if (isGameOver || isRestarting || currentLaserCharge < laserChargeDuration) return false;
+
+        currentLaserCharge = 0f;
+        UpdateLaserEnergyUI();
+
+        return true;
     }
 
     public int GetEnemyCount()
@@ -119,7 +184,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Reduce boss health and trigger win condition
+    // Reduce boss health and trigger victory
     public void DamageBoss(int damage)
     {
         if (levelType != LevelType.Standard_Boss || isRestarting || isGameOver || damage <= 0)
@@ -127,11 +192,37 @@ public class GameManager : MonoBehaviour
 
         bossHealth = Mathf.Max(0, bossHealth - damage);
 
+        Debug.Log("Boss Main Body " + bossHealth);
+
         if (bossHealth <= 0)
         {
             isRestarting = true;
-            StartCoroutine(RestartAfterClear());
+            isVictory = true;
+            canReturnToMenu = false;
+
+            BossBase bossBase = FindFirstObjectByType<BossBase>();
+
+            if (bossBase != null)
+                Destroy(bossBase.gameObject);
+
+            Time.timeScale = 0f;
+
+            if (victoryText != null)
+                victoryText.SetActive(true);
+
+            StartCoroutine(VictorySequence());
         }
+    }
+
+    // Wait before allowing the player to return to the main menu
+    private IEnumerator VictorySequence()
+    {
+        yield return new WaitForSecondsRealtime(victoryInputDelay);
+
+        if (victoryToMainMenuText != null)
+            victoryToMainMenuText.SetActive(true);
+
+        canReturnToMenu = true;
     }
 
     // Reload the current scene
@@ -142,6 +233,8 @@ public class GameManager : MonoBehaviour
     }
 
     // Handle level completion based on level type
+    // Handle level completion based on level type
+    // Handle Standard and Limitless level completion
     private IEnumerator RestartAfterClear()
     {
         yield return new WaitForSecondsRealtime(2f);
@@ -152,10 +245,6 @@ public class GameManager : MonoBehaviour
         {
             case LevelType.Standard:
                 SceneManager.LoadScene(bossSceneName);
-                break;
-
-            case LevelType.Standard_Boss:
-                Debug.Log("Boss Defeated! Level Complete!");
                 break;
 
             case LevelType.Limitless:
@@ -235,17 +324,18 @@ public class GameManager : MonoBehaviour
         BeginGameOver(player);
     }
 
-    // Play player death, wait, then respawn the player
+    // Play player death, then respawn with temporary invincibility
     private IEnumerator RespawnPlayer(PlayerController player, Vector3 respawnPosition)
     {
         Time.timeScale = 0f;
 
         yield return player.DestroyPlayer();
 
-        // Extra pause after the destruction animation finishes.
         yield return new WaitForSecondsRealtime(1.5f);
 
-        Instantiate(playerPrefab, respawnPosition, Quaternion.identity);
+        GameObject newPlayer = Instantiate(playerPrefab, respawnPosition, Quaternion.identity);
+
+        newPlayer.GetComponent<PlayerController>().SetInvincibility(1.0f);
 
         Time.timeScale = 1f;
     }

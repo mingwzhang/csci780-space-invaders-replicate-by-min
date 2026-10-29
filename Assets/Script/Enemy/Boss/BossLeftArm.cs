@@ -145,6 +145,8 @@ public class BossLeftArm : MonoBehaviour
 
         currentHealth = Mathf.Max(0, currentHealth - damage);
 
+        Debug.Log("Arm Left = " + currentHealth);
+
         if (currentHealth <= 0)
         {
             DestroyArm();
@@ -178,6 +180,16 @@ public class BossLeftArm : MonoBehaviour
         {
             if (spriteRenderers[i] != null)
                 spriteRenderers[i].color = originalColors[i];
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (isDestroyed) return;
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerLaser"))
+        {
+            TakeDamage(1);
         }
     }
 

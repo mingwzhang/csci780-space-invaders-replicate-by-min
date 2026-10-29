@@ -48,25 +48,21 @@ public class PlayerBullet : MonoBehaviour
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Boss"))
         {
-            BossLeftArm leftArm = collision.GetComponentInParent<BossLeftArm>();
-
-            if (leftArm != null)
+            if (collision.GetComponentInParent<BossLeftArm>() is BossLeftArm leftArm)
             {
                 leftArm.TakeDamage(1);
             }
-            else if (collision.TryGetComponent(out BossRightArm rightArm))
+            else if (collision.GetComponentInParent<BossRightArm>() is BossRightArm rightArm)
             {
                 rightArm.TakeDamage(1);
             }
-            else
+            else if (collision.GetComponentInParent<BossBase>() is BossBase bossBase)
             {
-                // Main body damage
+                bossBase.TakeDamage(1);
             }
 
             Destroy(gameObject);
         }
-
-
     }
     private void TriggerExplosion()
     {

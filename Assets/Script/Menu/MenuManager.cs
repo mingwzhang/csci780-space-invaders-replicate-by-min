@@ -1,29 +1,47 @@
+
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem.UI;
+
+// Controls main menu buttons and keyboard selection.
 
 public class MainMenuManager : MonoBehaviour
 {
-    void Update()
+    [Header("Scene Settings")]
+    [SerializeField] private string standardSceneName;
+    [SerializeField] private string unlimitedSceneName;
+
+    [Header("Menu Navigation")]
+    [SerializeField] private Button startButton;
+
+    private void Start()
     {
-        // Checks if ANY key on the keyboard was pressed down this frame
-        if (Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame)
-        {
-            StartGame();
-        }
+        InputSystemUIInputModule inputModule = EventSystem.current.GetComponent<InputSystemUIInputModule>();
+
+        if (inputModule != null)
+            inputModule.deselectOnBackgroundClick = false;
+
+        EventSystem.current.SetSelectedGameObject(startButton.gameObject);
     }
 
-    void StartGame()
+    public void StartGame()
     {
-        // ResetSore is static
         GameManager.ResetData();
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(standardSceneName);
+    }
 
-        // Can be checked in FIle > Build Profiles > Scene List
-        SceneManager.LoadScene(1);
+    public void StartUnlimited()
+    {
+        GameManager.ResetData();
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(unlimitedSceneName);
+    }
 
-        // Or 
-        // SceneManager.LoadScene("Main");
-
-        Debug.Log("Game Started!");
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

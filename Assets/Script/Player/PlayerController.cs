@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
 
     private CameraShake cameraShake;
 
+    private GameManager gameManager;
+
     // Time.deltaTime = the time since the previous frame, making movement frame-rate independent
     // Time.time = the total time since the game started
 
@@ -29,6 +31,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator childAnimator;
     [SerializeField] private Animator childSpecialAnimator;
     [SerializeField] private GameObject specialAttackObject;
+
+    [Header("Respawn Invincibility")]
+    [SerializeField] private float flashInterval = 0.1f;
+
+    private float invincibilityTimer;
+    private SpriteRenderer[] playerSprites;
+    private float[] originalAlpha;
+
     void Awake()
     {
         if (childAnimator == null || childSpecialAnimator == null)
@@ -38,7 +48,12 @@ public class PlayerController : MonoBehaviour
 
         audioManager = FindFirstObjectByType<AudioManager>();
         cameraShake = FindFirstObjectByType<CameraShake>();
+        gameManager = FindFirstObjectByType<GameManager>();
+        playerSprites = GetComponentsInChildren<SpriteRenderer>(true);
+        originalAlpha = new float[playerSprites.Length];
 
+        for (int i = 0; i < playerSprites.Length; i++)
+            originalAlpha[i] = playerSprites[i].color.a;
     }
 
     private void Start()
@@ -76,15 +91,39 @@ public class PlayerController : MonoBehaviour
         }
 
         // Special attack (X Key)
-        if (Keyboard.current.xKey.isPressed)
+        if (Keyboard.current.xKey.wasPressedThisFrame)
         {
             SpecialAttack();
         }
+
+        if (invincibilityTimer > 0f)
+            invincibilityTimer = Mathf.Max(0f, invincibilityTimer - Time.deltaTime);
+    }
+
+
+    // Apply visual blinking after Animator updates
+    private void LateUpdate()
+    {
+        bool invisible = invincibilityTimer > 0f &&
+            Mathf.FloorToInt(Time.time / Mathf.Max(0.01f, flashInterval)) % 2 == 0;
+
+        for (int i = 0; i < playerSprites.Length; i++)
+        {
+            Color color = playerSprites[i].color;
+            color.a = invisible ? 0f : originalAlpha[i];
+            playerSprites[i].color = color;
+        }
+    }
+
+    // Temporarily protect the player and flash its sprites
+    public void SetInvincibility(float duration)
+    {
+        invincibilityTimer = Mathf.Max(0f, duration);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isDying) return;
+        if (isDying || invincibilityTimer > 0f) return;
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy") || collision.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
         {
@@ -103,7 +142,9 @@ public class PlayerController : MonoBehaviour
 
     void SpecialAttack()
     {
-        if (isSpecialAttacking) return;
+        if (isSpecialAttacking || isDying) return;
+
+        if (!gameManager.TryConsumeLaserEnergy()) return;
 
         StartCoroutine(SpecialAttackSequence());
     }

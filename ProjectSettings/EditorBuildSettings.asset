@@ -9,8 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 6d11d9e17417ff44b8bc674b7a369d3a
   - enabled: 1
-    path: Assets/Scenes/Level.unity
+    path: Assets/Scenes/Level_Standard.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Level_Standard_Boss.unity
+    guid: 49c5d4c8b300e514f847abc054cbbd37
+  - enabled: 1
+    path: Assets/Scenes/Level_Unlimited.unity
+    guid: 25a32239fae5a2e4f962c0165756c850
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
